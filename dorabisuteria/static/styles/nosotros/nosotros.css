@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+body {
+  background-color: #F9F9F9;
+  color: #303031;
+  padding: 15px;
+}
+
+.logo_superior {
+  float: left;
+  padding: 15px;
+}
+
+header nav ul li {
+  display: inline;
+  margin-right: 2rem;
+}
+
+header nav ul {
+  list-style-type: none;
+  float: right;
+}
+
+header nav a:link {
+  text-decoration: none;
+  color: #303031;
+  font-weight: 500;
+}
+
+header nav a:visited {
+  text-decoration: none;
+  color: #303031;
+  font-weight: 500;
+}
+
+header nav ul #comprar a:link {
+  color: #71A894;
+  font-weight: bold;
+}
+
+header nav ul #comprar a:visited {
+  color: #71A894;
+  font-weight: bold;
+}
+
+header nav ul #inicio::before {
+  content: " ";
+  position: absolute;
+  transition-duration: 0.5s;
+  background-color: #F9F9F9;
+  height: 5px;
+  width: 41px;
+  top: 35px;
+}
+
+header nav ul #inicio:hover::before {
+  content: " ";
+  position: absolute;
+  transition-duration: 0.5s;
+  background-color: #71A894;
+  height: 5px;
+  width: 41px;
+  top: 35px;
+}
+
+header nav ul #nosotros::before {
+  content: " ";
+  position: absolute;
+  transition-duration: 0.5s;
+  background-color: #F9F9F9;
+  height: 5px;
+  width: 41px;
+  top: 35px;
+}
+
+header nav ul #nosotros:hover::before {
+  content: " ";
+  position: absolute;
+  transition-duration: 0.5s;
+  background-color: #71A894;
+  height: 5px;
+  width: 67px;
+  top: 35px;
+}
+
+header nav ul #productos::before {
+  content: " ";
+  position: absolute;
+  transition-duration: 0.5s;
+  background-color: #F9F9F9;
+  height: 5px;
+  width: 75px;
+  top: 35px;
+}
+
+header nav ul #productos:hover::before {
+  content: " ";
+  position: absolute;
+  transition-duration: 0.5s;
+  background-color: #71A894;
+  height: 5px;
+  width: 75px;
+  top: 35px;
+}
+
+header nav ul #comprar::before {
+  content: " ";
+  position: absolute;
+  transition-duration: 0.5s;
+  background-color: #F9F9F9;
+  height: 5px;
+  width: 66px;
+  top: 35px;
+}
+
+header nav ul #comprar:hover::before {
+  content: " ";
+  position: absolute;
+  transition-duration: 0.5s;
+  background-color: #71A894;
+  height: 5px;
+  width: 66px;
+  top: 35px;
+}/*# sourceMappingURL=nosotros.css.map */

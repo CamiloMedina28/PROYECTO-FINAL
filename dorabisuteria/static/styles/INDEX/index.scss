@@ -1,0 +1,350 @@
+@use "../DEFAULT/custom";
+
+
+// MIXINS 
+
+@mixin pseudoelemento_animacion_before($width, $color){
+    content: " ";
+    position: absolute;
+    transition-duration: 0.7s;
+    background-color: $color;
+    height: 5px;
+    width: $width;
+    top: 35px;
+}
+
+
+// FONTS 
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
+
+// CUERPO
+
+body{
+    background-color: custom.$background-color;
+    color: custom.$terciary;
+    padding: 15px;
+}
+
+
+// LOGO ESQUINA SUPERIOR IZQUIERDA
+
+.logo_superior{
+    float: left;
+    padding: 15px;
+}
+
+
+// MENÚ DE NAVEGACIÓN
+header nav #ul li{
+    display: inline;
+    margin-right: 2rem;
+}
+
+header nav #ul{
+    list-style-type: none;
+    float: right;
+    display: block;
+}
+
+header nav a:link {
+    text-decoration: none;
+    color: custom.$terciary;
+    font-weight: 500;
+}
+
+header nav a:visited {
+    text-decoration: none;
+    color: custom.$terciary;
+    font-weight: 500;
+}
+
+header nav #ul #comprar a:link{
+    color: custom.$primary;
+    font-weight: bold;
+}
+
+header nav #ul #comprar a:visited{
+    color: custom.$primary;
+    font-weight: bold;
+}
+
+.chequeo{
+    visibility: hidden;
+}
+
+// PSEUDOELEMENTOS DE DECORACIÓN DEL MENÚ DE LA NAVEGACIÓN
+
+header nav #ul #inicio::before{
+    @include pseudoelemento_animacion_before(41px, custom.$secondary);   
+}
+
+header nav #ul #inicio:hover::before{
+    @include pseudoelemento_animacion_before(41px, custom.$primary);
+}
+
+header nav #ul #nosotros::before{
+    @include pseudoelemento_animacion_before(41px, custom.$secondary);   
+}
+
+header nav #ul #nosotros:hover::before{
+    @include pseudoelemento_animacion_before(67px, custom.$primary);
+}
+
+header nav #ul #productos::before{
+    @include pseudoelemento_animacion_before(75px, custom.$secondary);
+}
+
+header nav #ul #productos:hover::before{
+    @include pseudoelemento_animacion_before(75px, custom.$primary);
+}
+
+header nav #ul #comprar::before{
+    @include pseudoelemento_animacion_before(66px, custom.$secondary);
+}
+
+header nav #ul #comprar:hover::before{
+    @include pseudoelemento_animacion_before(66px, custom.$primary);
+}
+
+
+// ELEMENTOS PRINCIPALES DEL LANDING PAGE(IMAGEN PRINCIPAL Y TEXTO)
+.main_landing{
+    position: absolute;
+    margin-top: 7vmax;
+    width: 90%;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+#titulos_principales{
+    font-family: Roboto;
+    margin-top: 8vmax;
+    float: left;
+}
+
+#imagen_principal{
+    float: right;
+}
+
+#boton{
+    background-color: custom.$primary;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    height: 45px;
+    width: 250px;
+}
+
+#boton:hover{
+    color: rgba(255, 255, 255, 1);
+    box-shadow: 2px 4px 16px 2px custom.$primary;
+    transition: all 0.2s ease;
+}
+
+
+// PORQUE ELEGIR NUESTROS PRODUCTOS
+
+.elegir_productos{
+    width: 95%;
+    margin-top: 50vmax;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.elegir_productos #titulos{
+    font-weight: 700;
+    font-family: Roboto;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.elegir_productos .caracteristicas_contenedor{
+    display:flex;
+    justify-content: space-between;
+}
+
+.elegir_productos .caracteristicas_contenedor #caracteristica{
+    align-content: center;
+    text-align: center;
+    margin: 0 7vmax 0 7vmax;
+}
+
+
+// CONTACTANOS
+
+.contactanos{
+    width: 95%;
+    margin-top: 50vmax;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.contactanos #contenedor_form{
+    display:flex;
+    justify-content: space-around;
+    list-style-type: none;
+
+}
+
+.contactanos #contenedor_form #formulario{
+    margin-top: 15px;
+    width: 30%;
+    border: 2px solid custom.$terciary;
+    border-radius: 22px;
+    list-style-type: none;
+
+}
+
+.contactanos ul{
+    list-style-type: none;
+}
+
+.contactanos p{
+    margin: 12px;
+}
+
+.contactanos #formulario p{
+    font-family: Roboto;
+    font-weight: bold;
+}
+
+.contactanos #texto{
+    width: 45%;
+}
+
+.contactanos #texto h2{
+    font-family: Abel;
+}
+
+.contactanos #texto p{
+    font-family: Roboto;
+}
+
+
+//Media querys
+//media query para el menu principal de la navegación
+
+@media screen and (max-width: 565px){
+    nav .menu-toogle {
+        float: right;
+        position:relative; /*Lo posicionamos absolutamente para poder darle una posición y poder moverlo según el menú esté abierto o cerrado*/
+        width: 35px;
+        line-height:1.1;
+        text-align:center;
+        border-radius:3px;
+    }
+    /*Añadimos la haburguesa y le damos unos estilos*/
+    nav .menu-toogle::before {
+        content:"☰";
+        font-size:32px;
+        color:black;
+    }
+    header nav #ul #comprar a:visited{
+        color: black;
+    }
+    header nav #ul {
+        margin-top: 40px;
+        text-align: center;
+        position: relative;
+        display: none;
+        float: right;
+        width: 150px;
+        height: 200px;
+        background-color: custom.$primary;
+    }
+    header nav #ul li{
+        margin: 30px;
+    }
+    header nav #ul #inicio::before{
+        @include pseudoelemento_animacion_before(0px, custom.$primary);   
+    }
+    
+    header nav #ul #inicio:hover::before{
+        @include pseudoelemento_animacion_before(0px, custom.$primary);
+    }
+    
+    header nav #ul #nosotros::before{
+        @include pseudoelemento_animacion_before(0px, custom.$primary);   
+    }
+    
+    header nav #ul #nosotros:hover::before{
+        @include pseudoelemento_animacion_before(0px, custom.$primary);
+    }
+    
+    header nav #ul #productos::before{
+        @include pseudoelemento_animacion_before(0px, custom.$primary);
+    }
+    
+    header nav #ul #productos:hover::before{
+        @include pseudoelemento_animacion_before(0px, custom.$primary);
+    }
+    
+    header nav #ul #comprar::before{
+        @include pseudoelemento_animacion_before(0px, custom.$primary);
+    }
+    
+    header nav #ul #comprar:hover::before{
+        @include pseudoelemento_animacion_before(0px, custom.$primary);
+    }
+}
+
+//media querys para la imagen principal
+
+@media screen and (max-width: 1068px){
+    #imagen_principal{
+        width: 45%;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    #imagen_principal{
+        visibility: hidden;
+    }
+}
+
+//media query por que elegir productos 
+
+@media screen and (max-width: 560px) {
+    .elegir_productos .caracteristicas_contenedor{
+        display: inline-block;
+    }
+}
+@media screen and (min-width: 1350px){
+    .elegir_productos{
+        margin-top: 40%;
+    }
+}
+@media screen and (min-width: 1830px){
+    .elegir_productos{
+        margin-top: 35%;
+    }
+}
+//media querys contáctanos
+@media screen and (min-width: 1000px) {
+    .contactanos {
+        margin-top: 80rem;
+    }
+}
+
+@media screen and (min-width: 700px){
+    .contactanos{
+        margin-top: 70rem;
+    }
+}
+
+@media screen and (max-width: 699px){
+    .contactanos{
+        margin-top: 60rem;
+    }
+}
+@media screen and (max-width: 430px){
+    .contactanos{
+        margin-top: 80rem;
+    }
+}

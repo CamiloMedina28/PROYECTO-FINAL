@@ -1,0 +1,131 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dora Bisutería</title>
+    <link rel="stylesheet" type="text/css" href='{%static "styles/INDEX/index.css"%}'>
+    <link rel="icon" type="image" href='{% static "img/LOGOS/logo 1 redim.png"%}'>
+</head>
+
+<body>
+
+    <script>
+        let contador = 0;
+        function hacer_click(){
+            if (contador == 0){
+                const $menu = document.querySelector("ul");
+                $menu.style.display = "block";
+                contador = 1;
+            }
+            else{
+                const $menu = document.querySelector("ul");
+                $menu.style.display = "none";
+                contador = 0;
+            }
+        }
+        function confirmacion(){
+            alert("Información enviada con exito.");
+        }
+    </script>
+
+    <header>
+
+        <img class="logo_superior" src="../IMAGENES/LOGOS/logo 1 redim.png" alt="Logo de dora bisuteria">
+
+        <nav>
+            
+            <input type="checkbox" class="chequeo" id="menu-toogle" onclick="hacer_click()"> <!--Casilla para que el menú se despliegue-->
+            <label for="menu-toogle" class="menu-toogle" ></label>
+            <ul style="z-index: 2; display: block;" id="ul">
+                <li id="inicio"><a href="../HTML/index.html">Inicio</a></li>
+                <li id="nosotros"><a href="../HTML/nosotros.html">Nosotros</a></li>
+                <li id="productos"><a href="../HTML/productos.html">Productos</a></li>
+                <li id="comprar"><a href="../HTML/comprar.html">Comprar</a></li>
+            </ul>
+
+        </nav>
+        
+        <main>
+            <section class="main_landing" style="z-index: 1;">
+                <div id="titulos_principales">
+                    <h2>
+                        TIENDA DE ACCESORIOS <br> DORA BISUTERÍA
+                    </h2>
+                    <p>VISTE BIEN, VISTE A LA MODA USA DORA BISUTERÍA</p>
+                    <a href="./productos.html">
+                        <input id="boton" type="submit" value="Ver Productos">
+                    </a>
+                </div>
+                <img id="imagen_principal" src="../IMAGENES/CABECERA/cabecera sin fondo.png">
+            </section>
+
+            <section class="elegir_productos">
+                <article>
+                    <div id="titulos">
+                        <h1>¿Porqué elegir nuestros productos?</h1>
+                        <p>Los productos de Dora Bisutería se caracterizan por ser</p>
+                    </div>
+                </article>
+                <article class="caracteristicas_contenedor">
+                    <div id="caracteristica">
+                        <img id="imagen" src="../IMAGENES/ELEMENTOS/PQ ELEGIR NUESTROS PRODUCTOS/1.png" alt="modernos">
+                        <h3>Modernos</h3>
+                        <p>Nuestros productos son <br> modernos y únicos.</p>
+                    </div>
+                    <div id="caracteristica">
+                        <img src="../IMAGENES/ELEMENTOS/PQ ELEGIR NUESTROS PRODUCTOS/2.png" alt="">
+                        <h3>Alta Calidad</h3>
+                        <p>Nuestros productos son fabricados con <br> los mejores productos del mercado.</p>
+                    </div>
+                    <div id="caracteristica">
+                        <img src="../IMAGENES/ELEMENTOS/PQ ELEGIR NUESTROS PRODUCTOS/3.png" alt="">
+                        <h3>Hechos con amor</h3>
+                        <p>Nuestros productos son hechos <br> con amor y ternura.</p>
+                    </div>
+                </article>
+            </section>
+
+            <section class="contactanos">
+                <div id="contenedor_form">
+                    <div id="formulario">
+                        <p>Formulario de contacto</p>
+                        <form action="" method="post">
+                            <ul>
+                                <li>
+                                    <label for="nombre">Nombre completo:</label>
+                                    <br>
+                                    <input type="text" id="nombre" placeholder="Nombre">
+                                </li>
+                                <br>
+                                <li>
+                                    <label for="correo">Correo electrónico:</label>
+                                    <br>
+                                    <input type="email" id="correo" placeholder="correo electrónico" required>
+                                </li>
+                                <br>
+                                <li>
+                                    <label for="texto">Ingresa tu duda o sugerencia:</label>
+                                    <br>
+                                    <textarea name="duda" rows="4" cols="30" placeholder="Ingresa tu duda pregunta sugerencia o petición" required></textarea>
+                                </li>
+                                <br>
+                                <li>
+                                    <input type="submit" id="boton">
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div id="texto">
+                        <img src="../IMAGENES/ELEMENTOS/CONTACTANOS/ELEMENTO1.png" alt="elemento decorativo">
+                        <h2>¡Contáctanos!</h2>
+                        <p>Llena el siguiente formulario y nos podremos en contacto contigo.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </header>
+</body>
+</html>
