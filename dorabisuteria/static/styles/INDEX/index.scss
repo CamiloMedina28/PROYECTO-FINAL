@@ -13,6 +13,19 @@
     top: 35px;
 }
 
+@mixin bordes($color){
+    border: 2px solid $color;
+    border-radius: 22px;
+}
+
+@mixin info_cont(){
+    width: 28%;
+    padding: 10px;
+    background-color: custom.$white;
+    box-shadow: 10px 10px 6px 0px custom.$gray-400;
+    text-align: left;
+}
+
 
 // FONTS 
 
@@ -175,7 +188,7 @@ header nav #ul #comprar:hover::before{
 }
 
 
-// CONTACTANOS
+// CONTÁCTANOS
 
 .contactanos{
     width: 95%;
@@ -189,16 +202,13 @@ header nav #ul #comprar:hover::before{
     display:flex;
     justify-content: space-around;
     list-style-type: none;
-
 }
 
 .contactanos #contenedor_form #formulario{
     margin-top: 15px;
     width: 30%;
-    border: 2px solid custom.$terciary;
-    border-radius: 22px;
+    @include bordes(custom.$terciary);
     list-style-type: none;
-
 }
 
 .contactanos ul{
@@ -224,6 +234,135 @@ header nav #ul #comprar:hover::before{
 
 .contactanos #texto p{
     font-family: Roboto;
+}
+
+.contactanos #formulario label{
+    font-family: Roboto;
+}
+
+//Redes sociales
+
+.redes_sociales #contenedor_redes #contenedor_enlaces{
+    @include bordes(custom.$terciary);
+    background-color: custom.$secondary_bg;
+    font-family: Roboto;
+
+}
+
+.redes_sociales #contenedor_redes{
+    display:flex;
+    justify-content: space-around;
+}
+
+.redes_sociales{
+    width: 95%;
+    margin-top: 100vmax;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.redes_sociales #contenedor_redes #parrafo_redes{
+    width: 45%;
+}
+
+.redes_sociales #contenedor_redes #contenedor_enlaces{
+    padding: 15px;
+    width: 30%;
+}
+
+.redes_sociales #contenedor_redes #conteneror_enlaces a:link{
+    text-decoration: none;
+    color: custom.$terciary;
+    font-weight: 500;
+}
+
+.redes_sociales #contenedor_redes #conteneror_enlaces a:visited{
+    text-decoration: none;
+    color: custom.$terciary;
+    font-weight: 500;
+}
+
+// opiniones
+.opiniones #contenedor_opiniones{
+    display:flex;
+    justify-content: space-around;
+}
+
+.opiniones{
+    width: 95%;
+    margin-top: 120vmax;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+}
+
+.opiniones h2{
+    font-family: Abel;
+    font-weight: 600;
+}
+
+.opiniones p{
+    font-family: Roboto;
+}
+
+.opiniones #contenedor_opiniones #op1{
+    @include bordes(custom.$white);
+    @include info_cont();
+}
+
+.opiniones #contenedor_opiniones #op2{
+    @include bordes(custom.$white);
+    @include info_cont();
+}
+
+.opiniones #contenedor_opiniones #op3{
+    @include bordes(custom.$white);
+    @include info_cont();
+}
+
+.footer{
+    position: relative;
+    margin-top: 150vmax;
+    
+}
+
+.footer #footer{
+    align-content: center;
+    display:flex;
+    justify-content: space-around;
+    width: 100%;
+    text-align: center;
+}
+
+.footer #footer #politicas{
+    width: 75%;
+}
+
+.footer #footer #politicas h2{
+    font-family: Abel;
+    font-weight: 600;
+}
+
+.footer #footer #politicas ul{
+    list-style-type: none;
+}
+
+.footer #footer #politicas ul li a:link{
+    text-decoration: none;
+    color: custom.$terciary;
+    font-weight: 500;
+}
+
+.footer #footer #politicas ul li a:visited{
+    text-decoration: none;
+    color: custom.$terciary;
+    font-weight: 500;
+}
+
+.footer #footer #Imagen_footer{
+    width: 75%;
 }
 
 

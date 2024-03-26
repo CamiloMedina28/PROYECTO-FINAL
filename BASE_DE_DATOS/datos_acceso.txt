@@ -1,0 +1,5 @@
+server route: dorabisuteriadb.mysql.database.azure.com
+
+user: dbadmin
+
+password: Camilomedina2829
