@@ -1,0 +1,65 @@
+CREATE SCHEMA IF NOT EXISTS dora_bisuteria;
+
+USE dora_bisuteria;
+
+CREATE TABLE IF NOT EXISTS persona(
+	per_id INT AUTO_INCREMENT NOT NULL, 
+    per_primer_nombre VARCHAR(45) NOT NULL,
+    per_segundo_nombre VARCHAR(45), 
+    per_primer_apellido VARCHAR(45) NOT NULL, 
+    per_segundo_apellido VARCHAR(45), 
+    per_email VARCHAR(60) NOT NULL, 
+    per_telefono BIGINT NOT NULL,
+    PRIMARY KEY(per_id)
+)ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS empleado(
+	emp_cedula MEDIUMINT NOT NULL, 
+    emp_cargo VARCHAR(45),
+    emp_salario INT,
+    persona_per_id INT,
+    permisos_ed ENUM('NONE', 'CR', 'CU', 'CD', 'CRU', 'CRD', 'CUD', 'RUD', 'RU', 'RD', 'UD', 'U', 'D', 'C', 'R', 'CRUD') DEFAULT 'NONE' NOT NULL, 
+    PRIMARY KEY(emp_cedula), 
+    CONSTRAINT FOREIGN KEY (persona_per_id) REFERENCES persona(per_id) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS cliente(
+	cli_per_id INT NOT NULL, 
+    PRIMARY KEY(cli_per_id), 
+    CONSTRAINT FOREIGN KEY (cli_per_id) REFERENCES persona(per_id)
+)ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS consulta(
+	con_cli_per_id INT NOT NULL, 
+    con_comentario LONGTEXT NOT NULL,
+    PRIMARY KEY(con_cli_per_id), 
+    CONSTRAINT FOREIGN KEY (con_cli_per_id) REFERENCES cliente(cli_per_id)
+)ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS proveedor(
+	prov_nit INT NOT NULL, 
+    prov_razon_social VARCHAR(45) NOT NULL, 
+    prov_telefono BIGINT NOT NULL, 
+    PRIMARY KEY(prov_nit)
+)ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS producto(
+	pro_id INT NOT NULL, 
+    pro_nombre VARCHAR(45), 
+    pro_precio INT NOT NULL, 
+    pro_stock INT DEFAULT 0,
+    pro_img MEDIUMTEXT,
+    PRIMARY KEY(pro_id)
+)ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS material(
+	prov_id INT NOT NULL, 
+    pro_id INT NOT NULL, 
+    stock INT NOT NULL DEFAULT 0, 
+    nombre VARCHAR(45) NOT NULL, 
+    PRIMARY KEY(prov_id, pro_id), 
+    CONSTRAINT FOREIGN KEY (prov_id) REFERENCES proveedor(prov_nit), 
+    CONSTRAINT FOREIGN KEY (pro_id) REFERENCES producto(pro_id)
+)ENGINE = InnoDB;
+
+
