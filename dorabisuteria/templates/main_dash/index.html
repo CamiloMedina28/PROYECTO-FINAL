@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dora Bisutería</title>
     <link rel="stylesheet" type="text/css" href='{%static "styles/INDEX/index.css"%}'>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <!-- Compiled and minified JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link rel="icon" type="image" href='{% static "img/LOGOS/logo 1 redim.png"%}'>
 </head>
 
@@ -24,19 +30,15 @@
                 $menu.style.display = "none";
                 contador = 0;
             }
-        }
-        function confirmacion(){
-            alert("Información enviada con exito.");
-        }
+        }               
     </script>
 
     <header>
 
         <img class="logo_superior" src="{%static 'img/LOGOS/logo 1 redim.png'%}" alt="Logo de dora bisuteria">
 
-        <nav>
-            
-            <input type="checkbox" class="chequeo" id="menu-toogle" onclick="hacer_click()"> <!--Casilla para que el menú se despliegue-->
+        <nav class="#ffffff white">
+            <input type="checkbox" class="chequeo" id="menu-toogle" > <!--Casilla para que el menú se despliegue onclick="hacer_click()""-->
             <label for="menu-toogle" class="menu-toogle" ></label>
             <ul style="z-index: 2; display: block;" id="ul">
                 <li id="inicio"><a href="/index">Inicio</a></li>
@@ -54,7 +56,7 @@
                     TIENDA DE ACCESORIOS <br> DORA BISUTERÍA
                 </h2>
                 <p>VISTE BIEN, VISTE A LA MODA USA DORA BISUTERÍA</p>
-                <a href="./productos.html">
+                <a href="/productos">
                     <input id="boton" type="submit" value="Ver Productos">
                 </a>
             </div>
@@ -93,31 +95,44 @@
                         {% csrf_token %}
                         <ul>
                             <li>
+                                <i class="small material-icons">account_circle</i>
                                 <label for="nombre">Nombre:</label>
                                 <br>
-                                <input type="text" id="nombre" name="nombre" required>
+                                <input type="text" class="validate" for="nombre" id="nombre" name="nombre" required>
+                                <br>
+                                <span class="helper-text" data-error="Valor incorrecto" data-success="Valor correcto"></span>
                             </li>
                             <br>
                             <li>
+                                <i class="small material-icons">account_circle</i>
                                 <label for="apellido">Apellido:</label>
                                 <br>
-                                <input type="text" id="apellido" name="apellido" required>
+                                <input type="text" class="validate" id="apellido" name="apellido" required>
+                                <br>
+                                <span class="helper-text" data-error="Valor incorrecto" data-success="Valor correcto"></span>
                             </li>
                             <br>
                             <li>
+                                <i class="small material-icons">email</i>
                                 <label for="correo">Correo electrónico:</label>
                                 <br>
-                                <input type="email" id="correo" name="correo" required>
-                            </li>
-                            <br>
-                            <li>
-                                <label for="texto">Ingresa tu duda o sugerencia:</label>
+                                <input type="email" class="validate" id="correo" name="correo" required>
                                 <br>
-                                <textarea id="duda" name="duda" rows="4" cols="30" placeholder="Ingresa tu duda pregunta sugerencia o petición" required></textarea>
+                                <span class="helper-text" data-error="Valor incorrecto" data-success="Valor correcto"></span>
                             </li>
                             <br>
                             <li>
-                                <input type="checkbox" required> <label>He leido y acepto los términos y condiciones</label>
+                                <i class="small material-icons">error</i>
+                                <label for="duda">Ingresa tu duda o sugerencia:</label>
+                                <br>
+                                <textarea id="duda" class="materialize-textarea" name="duda" data-length="120" required></textarea>
+                            </li>
+                            <br>
+                            <li>
+                                <label>
+                                    <input type="checkbox" class="filled-in" required>
+                                    <span>He leido y acepto los términos y condiciones</span>
+                                </label>
                             </li>
                             <br>
                             <li>

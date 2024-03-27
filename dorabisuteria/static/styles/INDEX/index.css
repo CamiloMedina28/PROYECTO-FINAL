@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Abel&display=swap");
 body {
@@ -53,10 +52,11 @@ header nav #ul #inicio::before {
   content: "";
   position: absolute;
   transition-duration: 0.7s;
-  background-color: #F9F9F9;
+  background-color: #fff !important;
   height: 5px;
   width: 41px;
   top: 55px;
+  margin-inline-start: 12px;
 }
 
 header nav #ul #inicio:hover::before {
@@ -67,16 +67,18 @@ header nav #ul #inicio:hover::before {
   height: 5px;
   width: 41px;
   top: 55px;
+  margin-inline-start: 12px;
 }
 
 header nav #ul #nosotros::before {
   content: "";
   position: absolute;
   transition-duration: 0.7s;
-  background-color: #F9F9F9;
+  background-color: #fff !important;
   height: 5px;
   width: 41px;
   top: 55px;
+  margin-inline-start: 12px;
 }
 
 header nav #ul #nosotros:hover::before {
@@ -87,16 +89,18 @@ header nav #ul #nosotros:hover::before {
   height: 5px;
   width: 67px;
   top: 55px;
+  margin-inline-start: 12px;
 }
 
 header nav #ul #productos::before {
   content: "";
   position: absolute;
   transition-duration: 0.7s;
-  background-color: #F9F9F9;
+  background-color: #fff !important;
   height: 5px;
   width: 75px;
   top: 55px;
+  margin-inline-start: 12px;
 }
 
 header nav #ul #productos:hover::before {
@@ -107,16 +111,18 @@ header nav #ul #productos:hover::before {
   height: 5px;
   width: 75px;
   top: 55px;
+  margin-inline-start: 12px;
 }
 
 header nav #ul #comprar::before {
   content: "";
   position: absolute;
   transition-duration: 0.7s;
-  background-color: #F9F9F9;
+  background-color: #fff !important;
   height: 5px;
   width: 66px;
   top: 55px;
+  margin-inline-start: 12px;
 }
 
 header nav #ul #comprar:hover::before {
@@ -127,6 +133,7 @@ header nav #ul #comprar:hover::before {
   height: 5px;
   width: 66px;
   top: 55px;
+  margin-inline-start: 12px;
 }
 
 .main_landing {
@@ -191,7 +198,7 @@ header nav #ul #comprar:hover::before {
 
 .contactanos {
   width: 95%;
-  margin-top: 85vmax;
+  margin-top: 105vmax;
   position: absolute;
   left: 50%;
   transform: translate(-50%);
@@ -204,6 +211,7 @@ header nav #ul #comprar:hover::before {
 }
 
 .contactanos #contenedor_form #formulario {
+  padding: 15px;
   margin-top: 15px;
   width: 40%;
   border: 2px solid #303031;
@@ -214,6 +222,7 @@ header nav #ul #comprar:hover::before {
 
 .contactanos ul {
   list-style-type: none;
+  padding-left: 5px;
 }
 
 .contactanos p {
@@ -242,8 +251,6 @@ header nav #ul #comprar:hover::before {
 }
 
 .contactanos #contenedor_form #formulario ul li #nombre {
-  border: none;
-  border-bottom: 2px solid black;
   font-size: 16px;
   margin-top: 5px;
   outline: 0;
@@ -253,8 +260,6 @@ header nav #ul #comprar:hover::before {
 }
 
 .contactanos #contenedor_form #formulario ul li #apellido {
-  border: none;
-  border-bottom: 2px solid black;
   font-size: 16px;
   margin-top: 5px;
   outline: 0;
@@ -264,8 +269,6 @@ header nav #ul #comprar:hover::before {
 }
 
 .contactanos #contenedor_form #formulario ul li #correo {
-  border: none;
-  border-bottom: 2px solid black;
   font-size: 16px;
   margin-top: 5px;
   outline: 0;
@@ -292,7 +295,7 @@ header nav #ul #comprar:hover::before {
 
 .redes_sociales {
   width: 95%;
-  margin-top: 130vmax;
+  margin-top: 175vmax;
   position: absolute;
   left: 50%;
   transform: translate(-50%);
@@ -326,7 +329,7 @@ header nav #ul #comprar:hover::before {
 
 .opiniones {
   width: 95%;
-  margin-top: 160vmax;
+  margin-top: 210vmax;
   position: absolute;
   left: 50%;
   transform: translate(-50%);
@@ -374,7 +377,7 @@ header nav #ul #comprar:hover::before {
 
 .footer {
   position: relative;
-  margin-top: 190vmax;
+  margin-top: 250vmax;
 }
 
 .footer #footer {
@@ -415,36 +418,6 @@ header nav #ul #comprar:hover::before {
 }
 
 @media screen and (max-width: 565px) {
-  nav .menu-toogle {
-    float: right;
-    position: relative; /*Lo posicionamos absolutamente para poder darle una posición y poder moverlo según el menú esté abierto o cerrado*/
-    width: 35px;
-    line-height: 1.1;
-    text-align: center;
-    border-radius: 3px;
-  }
-  /*Añadimos la haburguesa y le damos unos estilos*/
-  nav .menu-toogle::before {
-    content: "☰";
-    font-size: 32px;
-    color: black;
-  }
-  header nav #ul #comprar a:visited {
-    color: black;
-  }
-  header nav #ul {
-    margin-top: 40px;
-    text-align: center;
-    position: relative;
-    display: none;
-    float: right;
-    width: 150px;
-    height: 200px;
-    background-color: #71A894;
-  }
-  header nav #ul li {
-    margin: 30px;
-  }
   header nav #ul #inicio::before {
     content: "";
     position: absolute;
@@ -453,6 +426,7 @@ header nav #ul #comprar:hover::before {
     height: 5px;
     width: 0px;
     top: 55px;
+    margin-inline-start: 12px;
   }
   header nav #ul #inicio:hover::before {
     content: "";
@@ -462,6 +436,7 @@ header nav #ul #comprar:hover::before {
     height: 5px;
     width: 0px;
     top: 55px;
+    margin-inline-start: 12px;
   }
   header nav #ul #nosotros::before {
     content: "";
@@ -471,6 +446,7 @@ header nav #ul #comprar:hover::before {
     height: 5px;
     width: 0px;
     top: 55px;
+    margin-inline-start: 12px;
   }
   header nav #ul #nosotros:hover::before {
     content: "";
@@ -480,6 +456,7 @@ header nav #ul #comprar:hover::before {
     height: 5px;
     width: 0px;
     top: 55px;
+    margin-inline-start: 12px;
   }
   header nav #ul #productos::before {
     content: "";
@@ -489,6 +466,7 @@ header nav #ul #comprar:hover::before {
     height: 5px;
     width: 0px;
     top: 55px;
+    margin-inline-start: 12px;
   }
   header nav #ul #productos:hover::before {
     content: "";
@@ -498,6 +476,7 @@ header nav #ul #comprar:hover::before {
     height: 5px;
     width: 0px;
     top: 55px;
+    margin-inline-start: 12px;
   }
   header nav #ul #comprar::before {
     content: "";
@@ -507,6 +486,7 @@ header nav #ul #comprar:hover::before {
     height: 5px;
     width: 0px;
     top: 55px;
+    margin-inline-start: 12px;
   }
   header nav #ul #comprar:hover::before {
     content: "";
@@ -516,14 +496,20 @@ header nav #ul #comprar:hover::before {
     height: 5px;
     width: 0px;
     top: 55px;
+    margin-inline-start: 12px;
   }
 }
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1500px) {
   #imagen_principal {
     width: 45%;
   }
 }
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 1155px) {
+  #imagen_principal {
+    width: 35%;
+  }
+}
+@media screen and (max-width: 940px) {
   #imagen_principal {
     visibility: hidden;
   }
@@ -543,11 +529,6 @@ header nav #ul #comprar:hover::before {
     display: inline;
   }
 }
-@media screen and (max-width: 1100px) {
-  .contactanos {
-    margin-top: 80vmax;
-  }
-}
 @media screen and (max-width: 1040px) {
   .contactanos #contenedor_form #formulario ul li #boton {
     width: 15rem;
@@ -555,15 +536,20 @@ header nav #ul #comprar:hover::before {
 }
 @media screen and (max-width: 985px) {
   .contactanos {
-    margin-top: 100vmax;
+    margin-top: 120vmax;
+  }
+}
+@media screen and (max-width: 875px) {
+  .contactanos {
+    margin-top: 135vmax;
   }
 }
 @media screen and (max-width: 750px) {
+  .contactanos {
+    margin-top: 195vmax;
+  }
   .contactanos #contenedor_form {
     display: inline;
-  }
-  .contactanos {
-    margin-top: 175vmax;
   }
   .contactanos #contenedor_form {
     display: inline-flex;
@@ -575,14 +561,14 @@ header nav #ul #comprar:hover::before {
     width: 95%;
   }
 }
-@media screen and (max-width: 1100px) {
-  .redes_sociales {
-    margin-top: 130vmax;
-  }
-}
 @media screen and (max-width: 985px) {
   .redes_sociales {
-    margin-top: 165vmax;
+    margin-top: 200vmax;
+  }
+}
+@media screen and (max-width: 875px) {
+  .redes_sociales {
+    margin-top: 230vmax;
   }
 }
 @media screen and (max-width: 750px) {
@@ -590,7 +576,7 @@ header nav #ul #comprar:hover::before {
     display: inline;
   }
   .redes_sociales {
-    margin-top: 285vmax;
+    margin-top: 345vmax;
   }
   .redes_sociales #contenedor_redes {
     display: inline-flex;
@@ -598,14 +584,14 @@ header nav #ul #comprar:hover::before {
     flex-direction: column;
   }
 }
-@media screen and (max-width: 1100px) {
-  .opiniones {
-    margin-top: 170vmax;
-  }
-}
 @media screen and (max-width: 985px) {
   .opiniones {
-    margin-top: 200vmax;
+    margin-top: 245vmax;
+  }
+}
+@media screen and (max-width: 875px) {
+  .opiniones {
+    margin-top: 275vmax;
   }
 }
 @media screen and (max-width: 750px) {
@@ -613,7 +599,7 @@ header nav #ul #comprar:hover::before {
     display: inline;
   }
   .opiniones {
-    margin-top: 360vmax;
+    margin-top: 450vmax;
   }
   .opiniones #contenedor_opiniones {
     display: inline-flex;
@@ -638,12 +624,17 @@ header nav #ul #comprar:hover::before {
 }
 @media screen and (max-width: 1100px) {
   .footer {
-    margin-top: 225vmax;
+    margin-top: 255vmax;
   }
 }
 @media screen and (max-width: 985px) {
   .footer {
-    margin-top: 245vmax;
+    margin-top: 295vmax;
+  }
+}
+@media screen and (max-width: 875px) {
+  .footer {
+    margin-top: 325vmax;
   }
 }
 @media screen and (max-width: 985px) {
@@ -656,6 +647,6 @@ header nav #ul #comprar:hover::before {
     display: inline;
   }
   .footer {
-    margin-top: 440vmax;
+    margin-top: 570vmax;
   }
 }/*# sourceMappingURL=index.css.map */

@@ -11,6 +11,16 @@
     height: 5px;
     width: $width;
     top: 55px;
+    margin-inline-start: 12px;
+}
+
+@mixin custom_form_input(){
+    font-size: 16px;
+    margin-top: 5px;
+    outline: 0;
+    width: 80%;
+    background-color: custom.$secondary_bg;
+    color: #64696d;
 }
 
 @mixin bordes($color){
@@ -192,7 +202,7 @@ header nav #ul #comprar:hover::before{
 
 .contactanos{
     width: 95%;
-    margin-top: 85vmax;
+    margin-top: 105vmax;
     position: absolute;
     left: 50%;
     transform: translate(-50%);
@@ -205,6 +215,7 @@ header nav #ul #comprar:hover::before{
 }
 
 .contactanos #contenedor_form #formulario{
+    padding: 15px;
     margin-top: 15px;
     width: 40%;
     @include bordes(custom.$terciary);
@@ -214,6 +225,7 @@ header nav #ul #comprar:hover::before{
 
 .contactanos ul{
     list-style-type: none;
+    padding-left: 5px;
 }
 
 .contactanos p{
@@ -239,17 +251,6 @@ header nav #ul #comprar:hover::before{
 
 .contactanos #formulario label{
     font-family: Roboto;
-}
-
-@mixin custom_form_input(){
-    border: none;
-    border-bottom: 2px solid black;
-    font-size: 16px;
-    margin-top: 5px;
-    outline: 0;
-    width: 80%;
-    background-color: custom.$secondary_bg;
-    color: #64696d;
 }
 
 .contactanos #contenedor_form #formulario ul li #nombre{
@@ -284,7 +285,7 @@ header nav #ul #comprar:hover::before{
 
 .redes_sociales{
     width: 95%;
-    margin-top: 130vmax;
+    margin-top: 175vmax;
     position: absolute;
     left: 50%;
     transform: translate(-50%);
@@ -319,7 +320,7 @@ header nav #ul #comprar:hover::before{
 
 .opiniones{
     width: 95%;
-    margin-top: 160vmax;
+    margin-top: 210vmax;
     position: absolute;
     left: 50%;
     transform: translate(-50%);
@@ -352,7 +353,7 @@ header nav #ul #comprar:hover::before{
 
 .footer{
     position: relative;
-    margin-top: 190vmax;
+    margin-top: 250vmax;
     
 }
 
@@ -398,36 +399,36 @@ header nav #ul #comprar:hover::before{
 //media query para el menu principal de la navegación
 
 @media screen and (max-width: 565px){
-    nav .menu-toogle {
-        float: right;
-        position:relative; /*Lo posicionamos absolutamente para poder darle una posición y poder moverlo según el menú esté abierto o cerrado*/
-        width: 35px;
-        line-height:1.1;
-        text-align:center;
-        border-radius:3px;
-    }
-    /*Añadimos la haburguesa y le damos unos estilos*/
-    nav .menu-toogle::before {
-        content:"☰";
-        font-size:32px;
-        color:black;
-    }
-    header nav #ul #comprar a:visited{
-        color: black;
-    }
-    header nav #ul {
-        margin-top: 40px;
-        text-align: center;
-        position: relative;
-        display: none;
-        float: right;
-        width: 150px;
-        height: 200px;
-        background-color: custom.$primary;
-    }
-    header nav #ul li{
-        margin: 30px;
-    }
+//     nav .menu-toogle {
+//         float: right;
+//         position:relative; /*Lo posicionamos absolutamente para poder darle una posición y poder moverlo según el menú esté abierto o cerrado*/
+//         width: 35px;
+//         line-height:1.1;
+//         text-align:center;
+//         border-radius:3px;
+//     }
+//     /*Añadimos la haburguesa y le damos unos estilos*/
+//     nav .menu-toogle::before {
+//         content:"☰";
+//         font-size:32px;
+//         color:black;
+//     }
+//     header nav #ul #comprar a:visited{
+//         color: black;
+//     }
+//     header nav #ul {
+//         margin-top: 40px;
+//         text-align: center;
+//         position: relative;
+//         display: none;
+//         float: right;
+//         width: 150px;
+//         height: 200px;
+//         background-color: custom.$primary;
+//     }
+//     header nav #ul li{
+//         margin: 30px;
+//     }
     header nav #ul #inicio::before{
         @include pseudoelemento_animacion_before(0px, custom.$primary);   
     }
@@ -463,13 +464,19 @@ header nav #ul #comprar:hover::before{
 
 //media querys para la imagen principal
 
-@media screen and (max-width: 1100px){
+@media screen and (max-width: 1500px){
     #imagen_principal{
         width: 45%;
     }
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 1155px){
+    #imagen_principal{
+        width: 35%;
+    }
+}
+
+@media screen and (max-width: 940px) {
     #imagen_principal{
         visibility: hidden;
     }
@@ -497,12 +504,6 @@ header nav #ul #comprar:hover::before{
 
 //media querys contáctanos 
 
-@media screen and (max-width: 1100px){
-    .contactanos{
-        margin-top: 80vmax;
-    }
-}
-
 @media screen and (max-width: 1040px) {
     .contactanos #contenedor_form #formulario ul li #boton{
         width: 15rem;
@@ -511,17 +512,23 @@ header nav #ul #comprar:hover::before{
 
 @media screen and (max-width: 985px) {
     .contactanos{
-        margin-top: 100vmax;
+        margin-top: 120vmax;
     }
 }
 
+@media screen and (max-width: 875px){
+    .contactanos{
+        margin-top: 135vmax;
+    } 
+}
+
 @media screen and (max-width: 750px){
-    .contactanos #contenedor_form {
-        display: inline;
+    .contactanos{
+        margin-top: 195vmax;
     }
 
-    .contactanos{
-        margin-top: 175vmax;
+    .contactanos #contenedor_form {
+        display: inline;
     }
 
     .contactanos #contenedor_form {
@@ -536,19 +543,19 @@ header nav #ul #comprar:hover::before{
     }
 }
 
-//media querys redes sociales
-
-@media screen and (max-width: 1100px){
-    .redes_sociales{
-        margin-top: 130vmax;
-    }
-}
+//Media querys para redes sociales
 
 @media screen and (max-width: 985px){
     .redes_sociales{
-        margin-top: 165vmax;
+        margin-top: 200vmax;
     }
     
+}
+
+@media screen and (max-width: 875px) {
+    .redes_sociales{
+        margin-top: 230vmax;
+    }
 }
 
 @media screen and (max-width: 750px){
@@ -557,7 +564,7 @@ header nav #ul #comprar:hover::before{
     }
 
     .redes_sociales{
-        margin-top: 285vmax;
+        margin-top: 345vmax;
     }
 
     .redes_sociales #contenedor_redes {
@@ -567,17 +574,17 @@ header nav #ul #comprar:hover::before{
     }
 }
 
-//media querys opiniones
-
-@media screen and (max-width: 1100px){
-    .opiniones{
-        margin-top: 170vmax;
-    }
-}
+//Media querys para opiniones
 
 @media screen and (max-width: 985px){
     .opiniones{
-        margin-top: 200vmax;
+        margin-top: 245vmax;
+    }
+}
+
+@media screen and (max-width: 875px){
+    .opiniones{
+        margin-top: 275vmax;
     }
 }
 
@@ -587,7 +594,7 @@ header nav #ul #comprar:hover::before{
     }
 
     .opiniones{
-        margin-top: 360vmax;
+        margin-top: 450vmax;
     }
 
     .opiniones #contenedor_opiniones {
@@ -619,16 +626,22 @@ header nav #ul #comprar:hover::before{
 
 @media screen and (max-width: 1100px){
     .footer{
-        margin-top: 225vmax;
+        margin-top: 255vmax;
     }
 }
 
 @media screen and (max-width: 985px){
     .footer{
-        margin-top: 245vmax;
+        margin-top: 295vmax;
     }
 }
 
+@media screen and (max-width: 875px) {
+    .footer{
+        margin-top: 325vmax;
+    }
+    
+}
 @media screen and (max-width: 985px) {
     .footer #footer #Imagen_footer #img_foot{
         width: 45%;
@@ -641,8 +654,6 @@ header nav #ul #comprar:hover::before{
     }
 
     .footer{
-        margin-top: 440vmax;
-    }
-
-    
+        margin-top: 570vmax;
+    }   
 }
