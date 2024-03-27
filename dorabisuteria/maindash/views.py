@@ -8,6 +8,12 @@ from django.contrib import messages
 def index(request):
     return render (request, "main_dash/index.html")
 
+def nosotros(request):
+    return render(request, "main_dash/nosotros.html")
+
+def productos(request):
+    return render(request, "main_dash/productos.html")
+
 def send_info(request):
     if request.method == "POST":
         name = request.POST.get('nombre')
