@@ -26,14 +26,14 @@ CREATE TABLE IF NOT EXISTS empleado(
 CREATE TABLE IF NOT EXISTS cliente(
 	cli_per_id INT NOT NULL, 
     PRIMARY KEY(cli_per_id), 
-    CONSTRAINT FOREIGN KEY (cli_per_id) REFERENCES persona(per_id)
+    CONSTRAINT FOREIGN KEY (cli_per_id) REFERENCES persona(per_id) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS consulta(
 	con_cli_per_id INT NOT NULL, 
     con_comentario LONGTEXT NOT NULL,
     PRIMARY KEY(con_cli_per_id), 
-    CONSTRAINT FOREIGN KEY (con_cli_per_id) REFERENCES cliente(cli_per_id)
+    CONSTRAINT FOREIGN KEY (con_cli_per_id) REFERENCES cliente(cli_per_id) ON UPDATE NO ACTION ON DELETE NO ACTION
 )ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS proveedor(
@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS material(
     stock INT NOT NULL DEFAULT 0, 
     nombre VARCHAR(45) NOT NULL, 
     PRIMARY KEY(prov_id, pro_id), 
-    CONSTRAINT FOREIGN KEY (prov_id) REFERENCES proveedor(prov_nit), 
-    CONSTRAINT FOREIGN KEY (pro_id) REFERENCES producto(pro_id)
+    CONSTRAINT FOREIGN KEY (prov_id) REFERENCES proveedor(prov_nit) ON DELETE NO ACTION ON UPDATE CASCADE, 
+    CONSTRAINT FOREIGN KEY (pro_id) REFERENCES producto(pro_id) ON DELETE NO ACTION ON UPDATE CASCADE
 )ENGINE = InnoDB;
 
 

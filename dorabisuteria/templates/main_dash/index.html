@@ -93,21 +93,31 @@
                     <form action="" method="post">
                         <ul>
                             <li>
-                                <label for="nombre">Nombre completo:</label>
+                                <label for="nombre">Nombre:</label>
                                 <br>
-                                <input type="text" id="nombre" placeholder="Nombre">
+                                <input type="text" id="nombre" required>
+                            </li>
+                            <br>
+                            <li>
+                                <label for="apellido">Apellido:</label>
+                                <br>
+                                <input type="text" id="apellido" required>
                             </li>
                             <br>
                             <li>
                                 <label for="correo">Correo electrónico:</label>
                                 <br>
-                                <input type="email" id="correo" placeholder="correo electrónico" required>
+                                <input type="email" id="correo"  required>
                             </li>
                             <br>
                             <li>
                                 <label for="texto">Ingresa tu duda o sugerencia:</label>
                                 <br>
-                                <textarea name="duda" rows="4" cols="30" placeholder="Ingresa tu duda pregunta sugerencia o petición" required></textarea>
+                                <textarea id="duda" name="duda" rows="4" cols="30" placeholder="Ingresa tu duda pregunta sugerencia o petición" required></textarea>
+                            </li>
+                            <br>
+                            <li>
+                                <input type="checkbox" required> <label>He leido y acepto los términos y condiciones</label>
                             </li>
                             <br>
                             <li>
@@ -181,7 +191,7 @@
                 </ul>
             </div>
             <div id="Imagen_footer">
-                <img src="{%static 'img/ELEMENTOS/FINAL/Elementos pie de pagina.png'%}">
+                <img id="img_foot" src="{%static 'img/ELEMENTOS/FINAL/Elementos pie de pagina.png'%}">
 
             </div>
 

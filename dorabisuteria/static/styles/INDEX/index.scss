@@ -4,13 +4,13 @@
 // MIXINS 
 
 @mixin pseudoelemento_animacion_before($width, $color){
-    content: " ";
+    content: "";
     position: absolute;
     transition-duration: 0.7s;
     background-color: $color;
     height: 5px;
     width: $width;
-    top: 35px;
+    top: 55px;
 }
 
 @mixin bordes($color){
@@ -192,7 +192,7 @@ header nav #ul #comprar:hover::before{
 
 .contactanos{
     width: 95%;
-    margin-top: 50vmax;
+    margin-top: 85vmax;
     position: absolute;
     left: 50%;
     transform: translate(-50%);
@@ -206,9 +206,10 @@ header nav #ul #comprar:hover::before{
 
 .contactanos #contenedor_form #formulario{
     margin-top: 15px;
-    width: 30%;
+    width: 40%;
     @include bordes(custom.$terciary);
     list-style-type: none;
+    background-color: custom.$secondary_bg;
 }
 
 .contactanos ul{
@@ -240,6 +241,33 @@ header nav #ul #comprar:hover::before{
     font-family: Roboto;
 }
 
+@mixin custom_form_input(){
+    border: none;
+    border-bottom: 2px solid black;
+    font-size: 16px;
+    margin-top: 5px;
+    outline: 0;
+    width: 80%;
+    background-color: custom.$secondary_bg;
+    color: #64696d;
+}
+
+.contactanos #contenedor_form #formulario ul li #nombre{
+    @include custom_form_input();
+}
+
+.contactanos #contenedor_form #formulario ul li #apellido{
+    @include custom_form_input();
+}
+
+.contactanos #contenedor_form #formulario ul li #correo{
+    @include custom_form_input();
+}
+
+.contactanos #contenedor_form #formulario ul li #duda{
+    width: 80%;
+}
+
 //Redes sociales
 
 .redes_sociales #contenedor_redes #contenedor_enlaces{
@@ -256,7 +284,7 @@ header nav #ul #comprar:hover::before{
 
 .redes_sociales{
     width: 95%;
-    margin-top: 100vmax;
+    margin-top: 130vmax;
     position: absolute;
     left: 50%;
     transform: translate(-50%);
@@ -291,7 +319,7 @@ header nav #ul #comprar:hover::before{
 
 .opiniones{
     width: 95%;
-    margin-top: 120vmax;
+    margin-top: 160vmax;
     position: absolute;
     left: 50%;
     transform: translate(-50%);
@@ -324,7 +352,7 @@ header nav #ul #comprar:hover::before{
 
 .footer{
     position: relative;
-    margin-top: 150vmax;
+    margin-top: 190vmax;
     
 }
 
@@ -435,7 +463,7 @@ header nav #ul #comprar:hover::before{
 
 //media querys para la imagen principal
 
-@media screen and (max-width: 1068px){
+@media screen and (max-width: 1100px){
     #imagen_principal{
         width: 45%;
     }
@@ -449,41 +477,172 @@ header nav #ul #comprar:hover::before{
 
 //media query por que elegir productos 
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: 1100px){
+    .elegir_productos{
+        margin-top: 40vmax;
+    }
+}
+
+@media screen and (max-width: 985px){
+    .elegir_productos{
+        margin-top: 55vmax;
+    }
+}
+
+@media screen and (max-width: 750px){
     .elegir_productos .caracteristicas_contenedor{
-        display: inline-block;
-    }
-}
-@media screen and (min-width: 1350px){
-    .elegir_productos{
-        margin-top: 40%;
-    }
-}
-@media screen and (min-width: 1830px){
-    .elegir_productos{
-        margin-top: 35%;
-    }
-}
-//media querys contáctanos
-@media screen and (min-width: 1000px) {
-    .contactanos {
-        margin-top: 80rem;
+        display: inline;
     }
 }
 
-@media screen and (min-width: 700px){
+//media querys contáctanos 
+
+@media screen and (max-width: 1100px){
     .contactanos{
-        margin-top: 70rem;
+        margin-top: 80vmax;
     }
 }
 
-@media screen and (max-width: 699px){
-    .contactanos{
-        margin-top: 60rem;
+@media screen and (max-width: 1040px) {
+    .contactanos #contenedor_form #formulario ul li #boton{
+        width: 15rem;
     }
 }
-@media screen and (max-width: 430px){
+
+@media screen and (max-width: 985px) {
     .contactanos{
-        margin-top: 80rem;
+        margin-top: 100vmax;
     }
+}
+
+@media screen and (max-width: 750px){
+    .contactanos #contenedor_form {
+        display: inline;
+    }
+
+    .contactanos{
+        margin-top: 175vmax;
+    }
+
+    .contactanos #contenedor_form {
+        display: inline-flex;
+        justify-content: center;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    .contactanos #contenedor_form #formulario {
+        width: 95%;
+    }
+}
+
+//media querys redes sociales
+
+@media screen and (max-width: 1100px){
+    .redes_sociales{
+        margin-top: 130vmax;
+    }
+}
+
+@media screen and (max-width: 985px){
+    .redes_sociales{
+        margin-top: 165vmax;
+    }
+    
+}
+
+@media screen and (max-width: 750px){
+    .redes_sociales #contenedor_redes{
+        display: inline;
+    }
+
+    .redes_sociales{
+        margin-top: 285vmax;
+    }
+
+    .redes_sociales #contenedor_redes {
+        display: inline-flex;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+//media querys opiniones
+
+@media screen and (max-width: 1100px){
+    .opiniones{
+        margin-top: 170vmax;
+    }
+}
+
+@media screen and (max-width: 985px){
+    .opiniones{
+        margin-top: 200vmax;
+    }
+}
+
+@media screen and (max-width: 750px){
+    .opiniones #contenedor_opiniones{
+        display: inline;
+    }
+
+    .opiniones{
+        margin-top: 360vmax;
+    }
+
+    .opiniones #contenedor_opiniones {
+        display: inline-flex;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .opiniones #contenedor_opiniones #op1{
+        width: 200%;
+        transform: translate(-50%);
+        margin-top: 20px;
+    }
+
+    .opiniones #contenedor_opiniones #op2{
+        width: 200%;
+        transform: translate(-50%);
+        margin-top: 20px;
+    }
+
+    .opiniones #contenedor_opiniones #op3{
+        width: 200%;
+        transform: translate(-50%);
+        margin-top: 20px;
+    }
+}
+
+//media querys footer
+
+@media screen and (max-width: 1100px){
+    .footer{
+        margin-top: 225vmax;
+    }
+}
+
+@media screen and (max-width: 985px){
+    .footer{
+        margin-top: 245vmax;
+    }
+}
+
+@media screen and (max-width: 985px) {
+    .footer #footer #Imagen_footer #img_foot{
+        width: 45%;
+    }
+}
+
+@media screen and (max-width: 750px){
+    .footer #footer{
+        display: inline;
+    }
+
+    .footer{
+        margin-top: 440vmax;
+    }
+
+    
 }
