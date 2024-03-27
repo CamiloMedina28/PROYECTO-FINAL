@@ -1,22 +1,35 @@
+{% load static%}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dora Bisutería</title>
-    <link rel="stylesheet" href="../STYLES/productos/productos.css">
+    <link rel="stylesheet" type="text/css" href='{%static "styles/productos/productos.css"%}'>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <!-- Compiled and minified JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="icon" type="image" href='{% static "img/LOGOS/logo 1 redim.png"%}'>
 </head>
+
 <body>
+
     <header>
-        <img class="logo_superior" src="../IMAGENES/LOGOS/logo 1 redim.png" alt="Logo de dora bisuteria">
+
+        <img class="logo_superior" src="{%static 'img/LOGOS/logo 1 redim.png'%}" alt="Logo de dora bisuteria">
+
         <nav>
-            <ul>
-                <li id="inicio"><a href="../HTML/index.html">Inicio</a></li>
-                <li id="nosotros"><a href="../HTML/nosotros.html">Nosotros</a></li>
-                <li id="productos"><a href="../HTML/productos.html">Productos</a></li>
-                <li id="comprar"><a href="../HTML/comprar.html">Comprar</a></li>
+            <input type="checkbox" class="chequeo" id="menu-toogle" > <!--Casilla para que el menú se despliegue onclick="hacer_click()""-->
+            <label for="menu-toogle" class="menu-toogle" ></label>
+            <ul style="z-index: 2; display: block;" id="ul">
+                <li id="inicio"><a href="/index">Inicio</a></li>
+                <li id="nosotros"><a href="/nosotros">Nosotros</a></li>
+                <li id="productos"><a href="/productos">Productos</a></li>
             </ul>
+
         </nav>
     </header>
 </body>
-</html>

@@ -4,29 +4,30 @@
 // MIXINS 
 
 @mixin pseudoelemento_animacion_before($width, $color){
-    content: " ";
+    content: "";
     position: absolute;
-    transition-duration: 0.5s;
+    transition-duration: 0.7s;
     background-color: $color;
     height: 5px;
     width: $width;
-    top: 35px;
+    top: 55px;
+    margin-inline-start: 12px;
 }
 
 
 // FONTS 
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 
 
 // CUERPO
 
 body{
-    background-color: custom.$secondary;
+    background-color: custom.$background-color;
     color: custom.$terciary;
     padding: 15px;
 }
-
 
 // LOGO ESQUINA SUPERIOR IZQUIERDA
 
@@ -37,15 +38,19 @@ body{
 
 
 // MENÚ DE NAVEGACIÓN
-
-header nav ul li{
+header nav #ul li{
     display: inline;
     margin-right: 2rem;
 }
 
-header nav ul{
+header nav{
+    background-color: custom.$secondary;
+}
+
+header nav #ul{
     list-style-type: none;
     float: right;
+    display: block;
 }
 
 header nav a:link {
@@ -60,49 +65,50 @@ header nav a:visited {
     font-weight: 500;
 }
 
-header nav ul #comprar a:link{
+header nav #ul #comprar a:link{
     color: custom.$primary;
     font-weight: bold;
 }
 
-header nav ul #comprar a:visited{
+header nav #ul #comprar a:visited{
     color: custom.$primary;
     font-weight: bold;
 }
 
-
+.chequeo{
+    visibility: hidden;
+}
 
 // PSEUDOELEMENTOS DE DECORACIÓN DEL MENÚ DE LA NAVEGACIÓN
 
-header nav ul #inicio::before{
+header nav #ul #inicio::before{
     @include pseudoelemento_animacion_before(41px, custom.$secondary);   
 }
 
-header nav ul #inicio:hover::before{
+header nav #ul #inicio:hover::before{
     @include pseudoelemento_animacion_before(41px, custom.$primary);
 }
 
-header nav ul #nosotros::before{
+header nav #ul #nosotros::before{
     @include pseudoelemento_animacion_before(41px, custom.$secondary);   
 }
 
-header nav ul #nosotros:hover::before{
+header nav #ul #nosotros:hover::before{
     @include pseudoelemento_animacion_before(67px, custom.$primary);
 }
 
-header nav ul #productos::before{
+header nav #ul #productos::before{
     @include pseudoelemento_animacion_before(75px, custom.$secondary);
 }
 
-header nav ul #productos:hover::before{
+header nav #ul #productos:hover::before{
     @include pseudoelemento_animacion_before(75px, custom.$primary);
 }
 
-header nav ul #comprar::before{
+header nav #ul #comprar::before{
     @include pseudoelemento_animacion_before(66px, custom.$secondary);
 }
 
-header nav ul #comprar:hover::before{
+header nav #ul #comprar:hover::before{
     @include pseudoelemento_animacion_before(66px, custom.$primary);
 }
-

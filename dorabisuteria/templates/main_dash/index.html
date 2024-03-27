@@ -17,27 +17,11 @@
 
 <body>
 
-    <script>
-        let contador = 0;
-        function hacer_click(){
-            if (contador == 0){
-                const $menu = document.querySelector("ul");
-                $menu.style.display = "block";
-                contador = 1;
-            }
-            else{
-                const $menu = document.querySelector("ul");
-                $menu.style.display = "none";
-                contador = 0;
-            }
-        }               
-    </script>
-
     <header>
 
         <img class="logo_superior" src="{%static 'img/LOGOS/logo 1 redim.png'%}" alt="Logo de dora bisuteria">
 
-        <nav class="#ffffff white">
+        <nav>
             <input type="checkbox" class="chequeo" id="menu-toogle" > <!--Casilla para que el menú se despliegue onclick="hacer_click()""-->
             <label for="menu-toogle" class="menu-toogle" ></label>
             <ul style="z-index: 2; display: block;" id="ul">
@@ -141,6 +125,7 @@
                         </ul>
                     </form>
                 </div>
+                <br>
                 {% if messages %}
                     <ul class="messages">
                         {% for message in messages %}

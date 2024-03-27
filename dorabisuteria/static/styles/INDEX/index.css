@@ -16,6 +16,10 @@ header nav #ul li {
   margin-right: 2rem;
 }
 
+header nav {
+  background-color: #fff;
+}
+
 header nav #ul {
   list-style-type: none;
   float: right;
@@ -52,7 +56,7 @@ header nav #ul #inicio::before {
   content: "";
   position: absolute;
   transition-duration: 0.7s;
-  background-color: #fff !important;
+  background-color: #fff;
   height: 5px;
   width: 41px;
   top: 55px;
@@ -74,7 +78,7 @@ header nav #ul #nosotros::before {
   content: "";
   position: absolute;
   transition-duration: 0.7s;
-  background-color: #fff !important;
+  background-color: #fff;
   height: 5px;
   width: 41px;
   top: 55px;
@@ -96,7 +100,7 @@ header nav #ul #productos::before {
   content: "";
   position: absolute;
   transition-duration: 0.7s;
-  background-color: #fff !important;
+  background-color: #fff;
   height: 5px;
   width: 75px;
   top: 55px;
@@ -118,7 +122,7 @@ header nav #ul #comprar::before {
   content: "";
   position: absolute;
   transition-duration: 0.7s;
-  background-color: #fff !important;
+  background-color: #fff;
   height: 5px;
   width: 66px;
   top: 55px;
@@ -417,139 +421,26 @@ header nav #ul #comprar:hover::before {
   width: 75%;
 }
 
-@media screen and (max-width: 565px) {
-  header nav #ul #inicio::before {
-    content: "";
-    position: absolute;
-    transition-duration: 0.7s;
-    background-color: #71A894;
-    height: 5px;
-    width: 0px;
-    top: 55px;
-    margin-inline-start: 12px;
-  }
-  header nav #ul #inicio:hover::before {
-    content: "";
-    position: absolute;
-    transition-duration: 0.7s;
-    background-color: #71A894;
-    height: 5px;
-    width: 0px;
-    top: 55px;
-    margin-inline-start: 12px;
-  }
-  header nav #ul #nosotros::before {
-    content: "";
-    position: absolute;
-    transition-duration: 0.7s;
-    background-color: #71A894;
-    height: 5px;
-    width: 0px;
-    top: 55px;
-    margin-inline-start: 12px;
-  }
-  header nav #ul #nosotros:hover::before {
-    content: "";
-    position: absolute;
-    transition-duration: 0.7s;
-    background-color: #71A894;
-    height: 5px;
-    width: 0px;
-    top: 55px;
-    margin-inline-start: 12px;
-  }
-  header nav #ul #productos::before {
-    content: "";
-    position: absolute;
-    transition-duration: 0.7s;
-    background-color: #71A894;
-    height: 5px;
-    width: 0px;
-    top: 55px;
-    margin-inline-start: 12px;
-  }
-  header nav #ul #productos:hover::before {
-    content: "";
-    position: absolute;
-    transition-duration: 0.7s;
-    background-color: #71A894;
-    height: 5px;
-    width: 0px;
-    top: 55px;
-    margin-inline-start: 12px;
-  }
-  header nav #ul #comprar::before {
-    content: "";
-    position: absolute;
-    transition-duration: 0.7s;
-    background-color: #71A894;
-    height: 5px;
-    width: 0px;
-    top: 55px;
-    margin-inline-start: 12px;
-  }
-  header nav #ul #comprar:hover::before {
-    content: "";
-    position: absolute;
-    transition-duration: 0.7s;
-    background-color: #71A894;
-    height: 5px;
-    width: 0px;
-    top: 55px;
-    margin-inline-start: 12px;
-  }
-}
-@media screen and (max-width: 1500px) {
-  #imagen_principal {
-    width: 45%;
-  }
-}
-@media screen and (max-width: 1155px) {
-  #imagen_principal {
-    width: 35%;
-  }
-}
-@media screen and (max-width: 940px) {
+@media screen and (min-width: 320px) and (max-width: 767px) and ((orientation: portrait) or (orientation: landscape)) {
   #imagen_principal {
     visibility: hidden;
+    width: 2%;
   }
-}
-@media screen and (max-width: 1100px) {
   .elegir_productos {
-    margin-top: 40vmax;
+    margin-top: 35rem;
   }
-}
-@media screen and (max-width: 985px) {
-  .elegir_productos {
-    margin-top: 55vmax;
-  }
-}
-@media screen and (max-width: 750px) {
   .elegir_productos .caracteristicas_contenedor {
     display: inline;
   }
-}
-@media screen and (max-width: 1040px) {
-  .contactanos #contenedor_form #formulario ul li #boton {
-    width: 15rem;
-  }
-}
-@media screen and (max-width: 985px) {
   .contactanos {
-    margin-top: 120vmax;
-  }
-}
-@media screen and (max-width: 875px) {
-  .contactanos {
-    margin-top: 135vmax;
-  }
-}
-@media screen and (max-width: 750px) {
-  .contactanos {
-    margin-top: 195vmax;
+    margin-top: 125rem;
   }
   .contactanos #contenedor_form {
     display: inline;
+  }
+  .contactanos {
+    display: flex;
+    justify-content: center;
   }
   .contactanos #contenedor_form {
     display: inline-flex;
@@ -560,46 +451,31 @@ header nav #ul #comprar:hover::before {
   .contactanos #contenedor_form #formulario {
     width: 95%;
   }
-}
-@media screen and (max-width: 985px) {
-  .redes_sociales {
-    margin-top: 200vmax;
+  .contactanos #texto {
+    width: 100%;
   }
-}
-@media screen and (max-width: 875px) {
   .redes_sociales {
-    margin-top: 230vmax;
+    margin-top: 200rem;
   }
-}
-@media screen and (max-width: 750px) {
   .redes_sociales #contenedor_redes {
     display: inline;
-  }
-  .redes_sociales {
-    margin-top: 345vmax;
   }
   .redes_sociales #contenedor_redes {
     display: inline-flex;
     align-items: center;
     flex-direction: column;
   }
-}
-@media screen and (max-width: 985px) {
-  .opiniones {
-    margin-top: 245vmax;
+  .redes_sociales #contenedor_redes #contenedor_enlaces {
+    width: 90%;
   }
-}
-@media screen and (max-width: 875px) {
-  .opiniones {
-    margin-top: 275vmax;
+  .redes_sociales #contenedor_redes #parrafo_redes {
+    width: 100%;
   }
-}
-@media screen and (max-width: 750px) {
+  .opiniones {
+    margin-top: 250rem;
+  }
   .opiniones #contenedor_opiniones {
     display: inline;
-  }
-  .opiniones {
-    margin-top: 450vmax;
   }
   .opiniones #contenedor_opiniones {
     display: inline-flex;
@@ -621,32 +497,53 @@ header nav #ul #comprar:hover::before {
     transform: translate(-50%);
     margin-top: 20px;
   }
-}
-@media screen and (max-width: 1100px) {
   .footer {
-    margin-top: 255vmax;
+    margin-top: 300rem;
   }
-}
-@media screen and (max-width: 985px) {
-  .footer {
-    margin-top: 295vmax;
-  }
-}
-@media screen and (max-width: 875px) {
-  .footer {
-    margin-top: 325vmax;
-  }
-}
-@media screen and (max-width: 985px) {
-  .footer #footer #Imagen_footer #img_foot {
-    width: 45%;
-  }
-}
-@media screen and (max-width: 750px) {
   .footer #footer {
     display: inline;
   }
+  .footer #footer #Imagen_footer img {
+    width: 2%;
+    visibility: hidden;
+  }
+  .footer #footer #politicas {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1023px) and ((orientation: portrait) or (orientation: landscape)) {
+  #imagen_principal {
+    visibility: hidden;
+    width: 2%;
+  }
+  .contactanos {
+    margin-top: 75rem;
+  }
+  .redes_sociales {
+    margin-top: 130rem;
+  }
+  .opiniones {
+    margin-top: 160rem;
+  }
   .footer {
-    margin-top: 570vmax;
+    margin-top: 190rem;
+  }
+  .footer #footer #Imagen_footer img {
+    width: 60%;
+  }
+}
+@media screen and (min-width: 1024px) and (max-width: 1100px) {
+  #imagen_principal {
+    width: 30%;
+  }
+}
+@media screen and (min-width: 1101px) and (max-width: 1310px) {
+  #imagen_principal {
+    width: 40%;
+  }
+}
+@media screen and (min-width: 1311px) {
+  #imagen_principal {
+    width: 50%;
   }
 }/*# sourceMappingURL=index.css.map */

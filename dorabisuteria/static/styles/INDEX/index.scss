@@ -51,7 +51,6 @@ body{
     padding: 15px;
 }
 
-
 // LOGO ESQUINA SUPERIOR IZQUIERDA
 
 .logo_superior{
@@ -64,6 +63,10 @@ body{
 header nav #ul li{
     display: inline;
     margin-right: 2rem;
+}
+
+header nav{
+    background-color: custom.$secondary;
 }
 
 header nav #ul{
@@ -398,137 +401,97 @@ header nav #ul #comprar:hover::before{
 //Media querys
 //media query para el menu principal de la navegación
 
-@media screen and (max-width: 565px){
-//     nav .menu-toogle {
-//         float: right;
-//         position:relative; /*Lo posicionamos absolutamente para poder darle una posición y poder moverlo según el menú esté abierto o cerrado*/
-//         width: 35px;
-//         line-height:1.1;
-//         text-align:center;
-//         border-radius:3px;
+// @media screen and (max-width: 565px){
+// //     nav .menu-toogle {
+// //         float: right;
+// //         position:relative; /*Lo posicionamos absolutamente para poder darle una posición y poder moverlo según el menú esté abierto o cerrado*/
+// //         width: 35px;
+// //         line-height:1.1;
+// //         text-align:center;
+// //         border-radius:3px;
+// //     }
+// //     /*Añadimos la haburguesa y le damos unos estilos*/
+// //     nav .menu-toogle::before {
+// //         content:"☰";
+// //         font-size:32px;
+// //         color:black;
+// //     }
+// //     header nav #ul #comprar a:visited{
+// //         color: black;
+// //     }
+// //     header nav #ul {
+// //         margin-top: 40px;
+// //         text-align: center;
+// //         position: relative;
+// //         display: none;
+// //         float: right;
+// //         width: 150px;
+// //         height: 200px;
+// //         background-color: custom.$primary;
+// //     }
+// //     header nav #ul li{
+// //         margin: 30px;
+// //     }
+//     header nav #ul #inicio::before{
+//         @include pseudoelemento_animacion_before(0px, custom.$primary);   
 //     }
-//     /*Añadimos la haburguesa y le damos unos estilos*/
-//     nav .menu-toogle::before {
-//         content:"☰";
-//         font-size:32px;
-//         color:black;
+    
+//     header nav #ul #inicio:hover::before{
+//         @include pseudoelemento_animacion_before(0px, custom.$primary);
 //     }
-//     header nav #ul #comprar a:visited{
-//         color: black;
+    
+//     header nav #ul #nosotros::before{
+//         @include pseudoelemento_animacion_before(0px, custom.$primary);   
 //     }
-//     header nav #ul {
-//         margin-top: 40px;
-//         text-align: center;
-//         position: relative;
-//         display: none;
-//         float: right;
-//         width: 150px;
-//         height: 200px;
-//         background-color: custom.$primary;
+    
+//     header nav #ul #nosotros:hover::before{
+//         @include pseudoelemento_animacion_before(0px, custom.$primary);
 //     }
-//     header nav #ul li{
-//         margin: 30px;
+    
+//     header nav #ul #productos::before{
+//         @include pseudoelemento_animacion_before(0px, custom.$primary);
 //     }
-    header nav #ul #inicio::before{
-        @include pseudoelemento_animacion_before(0px, custom.$primary);   
-    }
     
-    header nav #ul #inicio:hover::before{
-        @include pseudoelemento_animacion_before(0px, custom.$primary);
-    }
+//     header nav #ul #productos:hover::before{
+//         @include pseudoelemento_animacion_before(0px, custom.$primary);
+//     }
     
-    header nav #ul #nosotros::before{
-        @include pseudoelemento_animacion_before(0px, custom.$primary);   
-    }
+//     header nav #ul #comprar::before{
+//         @include pseudoelemento_animacion_before(0px, custom.$primary);
+//     }
     
-    header nav #ul #nosotros:hover::before{
-        @include pseudoelemento_animacion_before(0px, custom.$primary);
-    }
-    
-    header nav #ul #productos::before{
-        @include pseudoelemento_animacion_before(0px, custom.$primary);
-    }
-    
-    header nav #ul #productos:hover::before{
-        @include pseudoelemento_animacion_before(0px, custom.$primary);
-    }
-    
-    header nav #ul #comprar::before{
-        @include pseudoelemento_animacion_before(0px, custom.$primary);
-    }
-    
-    header nav #ul #comprar:hover::before{
-        @include pseudoelemento_animacion_before(0px, custom.$primary);
-    }
-}
+//     header nav #ul #comprar:hover::before{
+//         @include pseudoelemento_animacion_before(0px, custom.$primary);
+//     }
+// }
 
-//media querys para la imagen principal
+// media querys para la imagen principal
 
-@media screen and (max-width: 1500px){
-    #imagen_principal{
-        width: 45%;
-    }
-}
-
-@media screen and (max-width: 1155px){
-    #imagen_principal{
-        width: 35%;
-    }
-}
-
-@media screen and (max-width: 940px) {
+@media screen and (min-width: 320px) and (max-width: 767px) and ((orientation: portrait) or (orientation: landscape)) { 
     #imagen_principal{
         visibility: hidden;
+        width: 2%;
     }
-}
 
-//media query por que elegir productos 
-
-@media screen and (max-width: 1100px){
     .elegir_productos{
-        margin-top: 40vmax;
+        margin-top: 35rem;
     }
-}
 
-@media screen and (max-width: 985px){
-    .elegir_productos{
-        margin-top: 55vmax;
-    }
-}
-
-@media screen and (max-width: 750px){
     .elegir_productos .caracteristicas_contenedor{
         display: inline;
     }
-}
 
-//media querys contáctanos 
-
-@media screen and (max-width: 1040px) {
-    .contactanos #contenedor_form #formulario ul li #boton{
-        width: 15rem;
-    }
-}
-
-@media screen and (max-width: 985px) {
     .contactanos{
-        margin-top: 120vmax;
-    }
-}
-
-@media screen and (max-width: 875px){
-    .contactanos{
-        margin-top: 135vmax;
-    } 
-}
-
-@media screen and (max-width: 750px){
-    .contactanos{
-        margin-top: 195vmax;
+        margin-top: 125rem;
     }
 
     .contactanos #contenedor_form {
         display: inline;
+    }
+
+    .contactanos {
+        display: flex;
+        justify-content: center;
     }
 
     .contactanos #contenedor_form {
@@ -541,30 +504,17 @@ header nav #ul #comprar:hover::before{
     .contactanos #contenedor_form #formulario {
         width: 95%;
     }
-}
 
-//Media querys para redes sociales
-
-@media screen and (max-width: 985px){
-    .redes_sociales{
-        margin-top: 200vmax;
+    .contactanos #texto{
+        width: 100%;
     }
-    
-}
 
-@media screen and (max-width: 875px) {
     .redes_sociales{
-        margin-top: 230vmax;
+        margin-top: 200rem;
     }
-}
 
-@media screen and (max-width: 750px){
     .redes_sociales #contenedor_redes{
         display: inline;
-    }
-
-    .redes_sociales{
-        margin-top: 345vmax;
     }
 
     .redes_sociales #contenedor_redes {
@@ -572,29 +522,21 @@ header nav #ul #comprar:hover::before{
         align-items: center;
         flex-direction: column;
     }
-}
 
-//Media querys para opiniones
-
-@media screen and (max-width: 985px){
-    .opiniones{
-        margin-top: 245vmax;
+    .redes_sociales #contenedor_redes #contenedor_enlaces{
+        width: 90%;
     }
-}
 
-@media screen and (max-width: 875px){
-    .opiniones{
-        margin-top: 275vmax;
+    .redes_sociales #contenedor_redes #parrafo_redes {
+        width: 100%;
     }
-}
 
-@media screen and (max-width: 750px){
+    .opiniones{
+        margin-top: 250rem;
+    }
+
     .opiniones #contenedor_opiniones{
         display: inline;
-    }
-
-    .opiniones{
-        margin-top: 450vmax;
     }
 
     .opiniones #contenedor_opiniones {
@@ -620,40 +562,67 @@ header nav #ul #comprar:hover::before{
         transform: translate(-50%);
         margin-top: 20px;
     }
-}
 
-//media querys footer
-
-@media screen and (max-width: 1100px){
     .footer{
-        margin-top: 255vmax;
+        margin-top: 300rem;
     }
-}
 
-@media screen and (max-width: 985px){
-    .footer{
-        margin-top: 295vmax;
-    }
-}
-
-@media screen and (max-width: 875px) {
-    .footer{
-        margin-top: 325vmax;
-    }
-    
-}
-@media screen and (max-width: 985px) {
-    .footer #footer #Imagen_footer #img_foot{
-        width: 45%;
-    }
-}
-
-@media screen and (max-width: 750px){
     .footer #footer{
         display: inline;
     }
 
+    .footer #footer #Imagen_footer img{
+        width: 2%;
+        visibility: hidden;
+    }
+
+    .footer #footer #politicas {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) and ((orientation:portrait) or (orientation:landscape)){
+    #imagen_principal{
+        visibility: hidden;
+        width: 2%;
+    }
+
+    .contactanos{
+        margin-top: 75rem;
+    }
+
+    .redes_sociales{
+        margin-top: 130rem;
+    }
+
+    .opiniones{
+        margin-top: 160rem;
+    }
+
     .footer{
-        margin-top: 570vmax;
-    }   
+        margin-top: 190rem;
+    }
+
+    .footer #footer #Imagen_footer img{
+        width: 60%;
+    }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1100px){
+    #imagen_principal{
+        width: 30%;
+    }
+}
+
+@media screen and (min-width: 1101px) and (max-width: 1310px){
+    #imagen_principal{
+        width: 40%;
+    }
+}
+
+@media screen and (min-width:1311px) {
+    #imagen_principal{
+        width: 50%;
+    }
+    
 }
