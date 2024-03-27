@@ -90,24 +90,25 @@
             <div id="contenedor_form">
                 <div id="formulario">
                     <p>Formulario de contacto</p>
-                    <form action="" method="post">
+                    <form action="/send_info" method="post">
+                        {% csrf_token %}
                         <ul>
                             <li>
                                 <label for="nombre">Nombre:</label>
                                 <br>
-                                <input type="text" id="nombre" required>
+                                <input type="text" id="nombre" name="nombre" required>
                             </li>
                             <br>
                             <li>
                                 <label for="apellido">Apellido:</label>
                                 <br>
-                                <input type="text" id="apellido" required>
+                                <input type="text" id="apellido" name="apellido" required>
                             </li>
                             <br>
                             <li>
                                 <label for="correo">Correo electrónico:</label>
                                 <br>
-                                <input type="email" id="correo"  required>
+                                <input type="email" id="correo" name="correo" required>
                             </li>
                             <br>
                             <li>
@@ -126,6 +127,13 @@
                         </ul>
                     </form>
                 </div>
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>    
+                {% endif %}
                 <div id="texto">
                     <img src="{%static 'img/ELEMENTOS/CONTACTANOS/ELEMENTO1.png' %}" alt="elemento decorativo">
                     <h2>¡Contáctanos!</h2>

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS persona(
     per_primer_apellido VARCHAR(45) NOT NULL, 
     per_segundo_apellido VARCHAR(45), 
     per_email VARCHAR(60) NOT NULL, 
-    per_telefono BIGINT NOT NULL,
+    per_telefono BIGINT,
     PRIMARY KEY(per_id)
 )ENGINE = InnoDB;
 

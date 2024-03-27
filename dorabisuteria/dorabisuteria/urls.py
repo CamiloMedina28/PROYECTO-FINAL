@@ -24,7 +24,5 @@ from maindash import views as dash_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', dash_views, name='index'),
     path('', include('maindash.urls')),
-    # path('', include('auth.urls')),
 ]

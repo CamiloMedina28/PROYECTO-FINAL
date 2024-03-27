@@ -1,0 +1,7 @@
+USE dora_bisuteria;
+
+CREATE USER insert_info_con IDENTIFIED BY 'insert_123';
+
+GRANT INSERT ON persona TO insert_info_con;
+GRANT INSERT ON cliente TO insert_info_con;
+GRANT INSERT ON consulta TO insert_info_con;
