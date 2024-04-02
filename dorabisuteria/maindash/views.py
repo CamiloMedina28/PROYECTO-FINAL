@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from .models import Cliente
 from .models import Consulta
+from .models import Producto
 
 # Create your views here.
 
@@ -14,7 +15,8 @@ def nosotros(request):
     return render(request, "main_dash/nosotros.html")
 
 def productos(request):
-    return render(request, "main_dash/productos.html")
+    productos = Producto.objects.all()
+    return render(request, "main_dash/productos.html", {"productos_en_db" : productos})
 
 def send_info(request):
     try:
@@ -39,6 +41,5 @@ def send_info(request):
     finally:
         return render(request, "main_dash/index.html")
 
-
-
-
+def contactanos(request):
+    return render(request, "main_dash/contactanos.html")

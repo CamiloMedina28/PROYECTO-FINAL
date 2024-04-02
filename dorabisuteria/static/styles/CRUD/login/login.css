@@ -1,0 +1,27 @@
+body {
+  background-color: #71A894;
+}
+
+.contenedor_form {
+  margin-top: 5rem;
+  padding: 15px;
+  background-color: rgba(130, 199, 174, 0.6941176471);
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  /* offset-x | offset-y | blur-radius | spread-radius | color */
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.contenedor_form form label {
+  color: black;
+}
+
+#volver a {
+  color: black;
+}/*# sourceMappingURL=login.css.map */

@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dora Bisutería</title>
-    <link rel="stylesheet" type="text/css" href='{%static "styles/productos/productos.css"%}'>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Icons -->
@@ -13,6 +12,7 @@
      <!-- Compiled and minified JavaScript -->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link rel="icon" type="image" href='{% static "img/LOGOS/logo 1 redim.png"%}'>
+    <link rel="stylesheet" type="text/css" href='{%static "styles/productos/productos.css"%}'>
 </head>
 
 <body>
@@ -29,7 +29,31 @@
                 <li id="nosotros"><a href="/nosotros">Nosotros</a></li>
                 <li id="productos"><a href="/productos">Productos</a></li>
             </ul>
-
         </nav>
     </header>
+
+    <main>
+        <h1>Ver nuestros productos</h1>
+        <div class="productos">
+            <!-- <div class="col s4 m7"> -->
+                {% for productos in productos_en_db %}
+                <div class="card">
+                    <div class="card-image">
+                        <img src={{productos.pro_img}}>
+                        <span class="card-title">{{productos.pro_nombre}}</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Stock: {{productos.pro_stock}}</p>
+                        <p>Precio: {{productos.pro_precio}}</p>
+                        <p>Contáctanos para recibir más información</p>
+                    </div>
+                    <div class="card-action">
+                        <button><a href="/contactanos">Contáctanos</a></button>
+                    </div>
+                </div>
+                {% endfor %}
+            <!-- </div> -->
+        </div>
+    </main>
 </body>
+    

@@ -1,0 +1,112 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href='{%static "\styles\ADMINISTRACION PRODUCTOS\admin_productos.css"%}'>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="icon" type="image" href='{% static "img/LOGOS/logo 1 redim.png"%}'>
+    <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script> 
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Administración de productos</h1>
+
+    <div class="row">
+        <div class="col s4">
+            <h3>Gestión de productos</h3>
+            <div>
+                <form action="/insert_new_products" enctype=”multipart/form-data” method="POST">
+                    {% csrf_token %}
+                    <div class="row input-field">
+                        <i class="material-icons prefix">assignment_ind</i>
+                        <input id="pro_id" type="text" name="pro_id" class="validate" required>
+                        <label for="pro_id">ID de producto</label>
+                    </div>
+
+                    <div class="row input-field">
+                        <i class="material-icons prefix">assignment</i>
+                        <input id="pro_nombre" type="text" name="pro_nombre" class="validate" required>
+                        <label for="pro_nombre">Nombre</label>
+                    </div>
+
+                    <div class="row input-field">
+                        <i class="material-icons prefix">attach_money</i>
+                        <input id="pro_precio" type="number" name="pro_precio" class="validate" required>
+                        <label for="pro_precio">Precio</label>
+                    </div>
+
+                    <div class="row input-field">
+                        <i class="material-icons prefix">book</i>
+                        <input id="pro_stock" type="number" name="pro_stock" class="validate" required>
+                        <label for="pro_stock">Stock</label>
+                    </div>
+
+                    <div class="row file-field input-field">
+                        <div class="btn">
+                            <span>Imagen</span>
+                            <input name="pro_img" type="file">
+                        </div>
+                        <div class="row file-path-wrapper">
+                          <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label>Seleccione los materiales</label>
+                        <select name="materiales" multiple>
+                           <option value = "" disabled selected>Seleccione materiales</option>
+                           {% for materiales in material_en_db%}
+                                <option value={{materiales.mat_id}}>{{materiales.mat_id}} - {{materiales.nombre}}</option>
+                           {% endfor %}
+                        </select>              
+                    </div>
+
+                    <input type="submit">
+
+                </form>
+            </div>
+        </div>
+
+        <div class="col s8">
+            <table class="striped centered responsive-table">
+                <h3>Listado de productos</h3>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {%for productos in productos_en_db%}
+                    <tr>
+                        <td>{{productos.pro_id}}</td>
+                        <td>{{productos.pro_nombre}}</td>
+                        <td>{{productos.pro_precio}}</td>
+                        <td>{{productos.pro_stock}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
