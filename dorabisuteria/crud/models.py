@@ -83,7 +83,7 @@ class Producto(models.Model):
     pro_nombre = models.CharField("Nombre del producto", max_length = 50)
     pro_precio = models.IntegerField("Precio del producto")
     pro_stock = models.IntegerField("Stock del producto")
-    pro_img = models.ImageField(upload_to='static/img/EDITADAS/nuevas')
+    pro_img = models.ImageField(upload_to='products/')
     materiales = models.ManyToManyField(Material)
 
     class Meta:
@@ -91,5 +91,5 @@ class Producto(models.Model):
         verbose_name_plural = "Productos"
 
     def __str__(self) -> str:
-        texto = "id_proveedor: {0} - id_material: {1} - nombre: {2} - precio: {2}"
+        texto = "id_proveedor: {0} - id_material: {1} - nombre: {2} - precio: {3}"
         return texto.format(self.pro_id, self.materiales, self.pro_nombre, self.pro_precio)

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proveedores</title>
-    <link rel="stylesheet" type="text/css" href='{%static "\styles\main_admin_dash\main_admin_dash.css"%}'>
+    <link rel="stylesheet" type="text/css" href='{%static "\styles\PROVEEDORES/prov.css"%}'>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Icons -->
@@ -17,4 +17,64 @@
 
 <body>
     <h1>Administración de proveedores</h1>
+
+    <button><a href="/admin_dash">Volver</a></button>
+
+    <div class="row">
+        <div class="col s4">
+            <h3>Gestión de proveedores</h3>
+            <div>
+                <form action="/insert_new_prov" method="POST">
+                    {% csrf_token %}
+                    <div class="row input-field">
+                        <i class="material-icons prefix">assignment_ind</i>
+                        <input id="prov_nit" type="number" name="prov_nit" class="validate" required>
+                        <label for="prov_nit">NIT del proveedor</label>
+                    </div>
+
+                    <div class="row input-field">
+                        <i class="material-icons prefix">assignment</i>
+                        <input id="prov_razon_social" type="text" name="prov_razon_social" class="validate" required>
+                        <label for="prov_razon_social">Razon Social</label>
+                    </div>
+
+                    <div class="row input-field">
+                        <i class="material-icons prefix">attach_money</i>
+                        <input id="prov_telefono" type="number" name="prov_telefono" class="validate" required>
+                        <label for="prov_telefono">Teléfono</label>
+                    </div>
+
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+
+        <div class="col s8">
+            <table class="striped centered responsive-table">
+                <h3>Listado de proveedores</h3>
+                <thead>
+                    <tr>
+                        <th>IDNIT</th>
+                        <th>Razon Social</th>
+                        <th>Teléfono</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {%for proveedores in proveedores_en_db%}
+                    <tr>
+                        <td>{{proveedores.prov_nit}}</td>
+                        <td>{{proveedores.prov_razon_social}}</td>
+                        <td>{{proveedores.prov_telefono}}</td>
+                        <td><button><a href="/eliminar_proveedores/{{proveedores.prov_nit}}">Eliminar</a></button></td>
+                        <td><button><a>Editar</a></button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 </body>

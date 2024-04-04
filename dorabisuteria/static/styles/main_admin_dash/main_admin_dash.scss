@@ -54,6 +54,9 @@ h1{
 .contenedor_opciones #cont4{
     @include elementos_admin(4px 4px 8px 0 rgba(0,0,0,0.2));
 }
+.contenedor_opciones #cont5{
+    @include elementos_admin(4px 4px 8px 0 rgba(0,0,0,0.2));
+}
 
 .contenedor_opciones #cont1:hover{
     @include elementos_admin(8px 8px 16px 0 rgba(0,0,0,0.2));
@@ -65,5 +68,8 @@ h1{
     @include elementos_admin(8px 8px 16px 0 rgba(0,0,0,0.2));
 }
 .contenedor_opciones #cont4:hover{
+    @include elementos_admin(8px 8px 16px 0 rgba(0,0,0,0.2));
+}
+.contenedor_opciones #cont5:hover{
     @include elementos_admin(8px 8px 16px 0 rgba(0,0,0,0.2));
 }

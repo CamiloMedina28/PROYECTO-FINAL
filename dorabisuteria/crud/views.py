@@ -1,9 +1,13 @@
 import json
+import os
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Producto, Material
+from .models import Producto, Material, Proveedor, Material
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+
 # Create your views here.
 
 def inventario(request):
@@ -49,7 +53,8 @@ def products_administration(request):
 @login_required
 def prov_administration(request):
     if request.user.is_authenticated:
-        return render(request, "admin_dash/proveedores_admin.html")
+        proveedores = Proveedor.objects.all()
+        return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db": proveedores})
     else:
         return render(request, "main_dash/index.html")
 
@@ -60,11 +65,13 @@ def insert_new_products(request):
         pro_nombre = request.POST.get('pro_nombre')
         pro_precio = request.POST.get('pro_precio')
         pro_stock = request.POST.get('pro_stock')
-        pro_img = request.POST.get('pro_img')
+        pro_img = request.FILES.get('pro_img')
         materiales = request.POST.get('materiales')
-        print(materiales)
+        folder = 'media/'
+        fs = FileSystemStorage(location=folder)
+        filename = fs.save(pro_img.name, pro_img)
         if pro_nombre in Producto.objects.values_list('pro_nombre', flat=True) or pro_id in Producto.objects.values_list('pro_id', flat=True):
-            messages.error("El nombre o el id de producto ya existen en la base de datos")
+            messages.error(request, "El nombre o el id de producto ya existen en la base de datos")
             productos = Producto.objects.all()
             materiales = Material.objects.all()
             return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, "material_en_db" : materiales})
@@ -82,31 +89,88 @@ def insert_new_products(request):
         return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, "material_en_db" : materiales})
     else:
         return render(request, "/main_dash/index.html")
-    # try:
-    #     if request.method == "POST":
-    #         name = request.POST.get('nombre')
-    #         apellido = request.POST.get('apellido')
-    #         correo = request.POST.get('correo')
-    #         duda = request.POST.get('duda')
-    #     json_structure_new_client =  "{"+f""""Nombre" : "{name}","Apellido" : "{apellido}", "correo": "{correo}", "duda":"{duda}" """ + "}" 
-    #     json_data_new_client = json.loads(json_structure_new_client)
-    #     nuevo_cliente = Cliente(per_primer_nombre = json_data_new_client['Nombre'],
-    #                            per_primer_apellido = json_data_new_client['Apellido'], 
-    #                            per_email = json_data_new_client['correo'])
-    #     nuevo_cliente.save()
-    #     nueva_duda = Consulta(con_cli_per_id = nuevo_cliente,
-    #                           con_comentario = json_data_new_client['duda'])
-    #     nueva_duda.save()
-    # except Exception as error: 
-    #     messages.error(request, "La información no pudo ser enviada" + str(error))
-    # else:
-    #     messages.success(request, "El dato ha sido ingresado con éxito")
-    # finally:
-    #     return render(request, "main_dash/index.html")
-    pass
+    
+def eliminar_producto(request, pro_id_eliminar):
+    producto = Producto.objects.get(pro_id = pro_id_eliminar)
+    ruta = os.path.join(settings.BASE_DIR, 'media/' + str(producto.pro_img))
+    os.remove(ruta)
+    producto.delete() # DELETE FROM producto WHERE pro_id = pro_id
+    productos = Producto.objects.all()
+    materiales = Material.objects.all()
+    return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, "material_en_db" : materiales})
+
 
 def employees_administration(request):
     if request.user.is_authenticated:
         return render(request, "admin_dash/empleados_admin.html")
     else:
         return render(request, "main_dash/index.html")
+    
+@login_required
+def insert_new_prov(request):
+    if request.method == "POST":
+        prov_nit = request.POST.get('prov_nit')
+        prov_razon_social = request.POST.get('prov_razon_social')
+        prov_telefono = request.POST.get('prov_telefono')
+        if prov_nit in Proveedor.objects.values_list('prov_nit', flat=True) or prov_razon_social in Proveedor.objects.values_list('prov_razon_social', flat=True):
+            messages.error(request, "El nombre o el id de producto ya existen en la base de datos")
+            proveedores = Proveedor.objects.all()
+            return render(request, "admin_dash/productos_admin.html", {"proveedores_en_db" : proveedores})
+        json_structure_new_proveedor = "{"+f""""prov_nit" : "{prov_nit}","prov_razon_social" : "{prov_razon_social}", "prov_telefono": "{prov_telefono}" """ + "}" 
+        json_data_new_proveedor = json.loads(json_structure_new_proveedor)
+        nuevo_proveedor = Proveedor(prov_nit = json_data_new_proveedor['prov_nit'], 
+                                  prov_razon_social = json_data_new_proveedor['prov_razon_social'], 
+                                  prov_telefono = json_data_new_proveedor['prov_telefono'])
+        nuevo_proveedor.save()
+    if request.user.is_authenticated:
+        proveedores = Proveedor.objects.all()
+        return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db": proveedores})
+    else:
+        return render(request, "main_dash/index.html")
+
+@login_required
+def eliminar_proveedores(request, prov_nit_eliminar):
+    proveedor = Proveedor.objects.get(prov_nit = prov_nit_eliminar)
+    proveedor.delete() # DELETE FROM proveedor WHERE prov_nit = prov_nit_eliminar
+    proveedores = Proveedor.objects.all()
+    return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db" : proveedores})
+
+@login_required
+def materiales_admin(request):
+    if request.user.is_authenticated:
+        materiales = Material.objects.all()
+        proveedores = Proveedor.objects.all()
+        return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
+    else:
+        return render(request, "main_dash/index.html")
+    pass
+
+def eliminar_materiales(request, mat_id_eliminar):
+    proveedor = Material.objects.get(mat_id = mat_id_eliminar)
+    proveedor.delete() # DELETE FROM material WHERE mat_id = mat_id_eliminar
+    materiales = Material.objects.all()
+    proveedores = Proveedor.objects.all()
+    return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db" : materiales, "proveedores_en_db": proveedores})
+
+def insert_new_mat(request):
+    if request.method == "POST":
+        mat_id = request.POST.get('mat_id')
+        mat_pro_id = request.POST.get('mat_prov_id')
+        stock = request.POST.get('stock')
+        nombre = request.POST.get('nombre')
+        if mat_id in Material.objects.values_list('mat_id', flat=True) or nombre in Material.objects.values_list('nombre', flat=True):
+            messages.error(request, "El nombre o el id de producto ya existen en la base de datos")
+            materiales = Material.objects.all()
+            proveedores = Proveedor.objects.all()
+            return render(request, "admin_dash/productos_admin.html", {"materiales_en_db": materiales,"proveedores_en_db" : proveedores})
+        json_structure_new_material = "{"+f""""mat_id" : "{mat_id}", "stock": "{stock}", "nombre":"{nombre}" """ + "}" 
+        json_data_new_material = json.loads(json_structure_new_material)
+        proveedor = Proveedor.objects.get(prov_nit = mat_pro_id)
+        nuevo_material = Material(mat_id = json_data_new_material['mat_id'], 
+                                  mat_prov_id = proveedor, 
+                                  stock = json_data_new_material['stock'], 
+                                  nombre = json_data_new_material['nombre'])
+        nuevo_material.save()
+        materiales = Material.objects.all()
+        proveedores = Proveedor.objects.all()
+        return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
