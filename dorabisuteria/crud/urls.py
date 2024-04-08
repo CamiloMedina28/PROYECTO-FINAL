@@ -26,6 +26,7 @@ urlpatterns = [
     path('proveedores_update/<prov_nit_edit>', views.proveedores_update, name="proveedores_update"), 
     path('editar_proveedor', views.editar_proveedor, name="editar_proveedor"), 
     path('materiales_update/<material_id>', views.materiales_update, name="materiales_update"), 
-    path('update_material', views.update_material, name="update_material")
+    path('update_material', views.update_material, name="update_material"), 
+    path('update_productos/<id_actualizacion>', views.update_productos, name="update_productos")
 ]
 

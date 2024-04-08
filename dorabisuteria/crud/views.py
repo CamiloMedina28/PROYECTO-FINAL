@@ -244,7 +244,14 @@ def materiales_admin(request):
         if request.user.is_authenticated:
             materiales = Material.objects.all()
             proveedores = Proveedor.objects.all()
-            return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
+            permisos_edicion = request.user.has_perm('user.change_material')
+            permisos_creacion = request.user.has_perm('user.add_material')
+            permisos_eliminacion = request.user.has_perm('user.delete_material')
+            return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, 
+                                                                        "proveedores_en_db": proveedores, 
+                                                                        "permisos_creacion":permisos_creacion, 
+                                                                        "permisos_edicion":permisos_edicion, 
+                                                                        "permisos_eliminacion":permisos_eliminacion})
         else:
             return render(request, "main_dash/index.html")
     else:
@@ -311,7 +318,9 @@ def insert_new_mat(request):
 def clientes_admin(request):
     if request.user.has_perm('crud.view_consulta'):
         consulta = Consulta.objects.all()
-        return render(request, "admin_dash/clientes_admin.html", {"consultas_en_db": consulta})
+        permisos_eliminacion = request.user.has_perm('crud.delete_consulta')
+        return render(request, "admin_dash/clientes_admin.html", {"consultas_en_db": consulta, 
+                                                                  "permisos_eliminacion":permisos_eliminacion})
     else:
         messages.error(request, "Usted no tiene permiso para acceder a esta sección")
         return render(request, "admin_dash/main.html")
@@ -330,7 +339,7 @@ def eliminar_consulta(request, id_consulta_eliminar):
 
 @login_required
 def create_new_user(request):
-    if request.user.is_superuser:
+    if request.user.has_perm('user.add_user'):
         try:
             if request.method == "POST":
                 new_user_first_name = request.POST.get('new_user_first_name')
@@ -364,74 +373,111 @@ def create_new_user(request):
             messages.error(request, "Ha ocurrido un grave error: " + str(error))
             users = User.objects.all()
             return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users})
-    
+    else:
+        messages.error(request, "Usted no tiene los permisos suficientes para desarrollar esta acción")
+        users = User.objects.all()
+        return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users})    
     
 @login_required
 def eliminar_usuarios(request, id_usuario_eliminar):
-    usuario_eliminar = User.objects.get(id = id_usuario_eliminar)
-    usuario_eliminar.delete()
-    users = User.objects.all()
-    usuario_actual = request.user
-    return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, "usuario_actual" : usuario_actual})
+    if request.user.has_perm('user.delete_user'):
+        usuario_eliminar = User.objects.get(id = id_usuario_eliminar)
+        usuario_eliminar.delete()
+        users = User.objects.all()
+        usuario_actual = request.user
+        return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, "usuario_actual" : usuario_actual})
+    else: 
+        messages.error(request, "Usted no tiene los permisos suifiecientes para desarrollar esta acción")
+        users = User.objects.all()
+        usuario_actual = request.user
+        return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, "usuario_actual" : usuario_actual})
 
 @login_required
 def proveedores_update(request, prov_nit_edit):
-    proveedor = Proveedor.objects.get(prov_nit = prov_nit_edit)
-    return render(request, "update_templates/proveedores_update.html", {"proveedor_editar": proveedor})
+    if request.user.has_perm('user.change_proveedor'):
+        proveedor = Proveedor.objects.get(prov_nit = prov_nit_edit)
+        return render(request, "update_templates/proveedores_update.html", {"proveedor_editar": proveedor})
+    else:
+        proveedor = Proveedor.objects.get(prov_nit = prov_nit_edit)
+        return render(request, "update_templates/proveedores_update.html", {"proveedor_editar": proveedor})
 
 @login_required
 def editar_proveedor(request):
-    try:
-        if request.method == "POST":
-            prov_nit = request.POST.get('prov_nit')
-            prov_razon_social = request.POST.get('prov_razon_social')
-            prov_telefono = request.POST.get('prov_telefono')
-            proveedor = Proveedor.objects.get(prov_nit = prov_nit)
-            json_structure_new_proveedor = "{"+f""""prov_nit" : "{prov_nit}","prov_razon_social" : "{prov_razon_social}", "prov_telefono": "{prov_telefono}" """ + "}" 
-            json_data_new_proveedor = json.loads(json_structure_new_proveedor)
-            proveedor.prov_nit = json_data_new_proveedor['prov_nit']
-            proveedor.prov_razon_social = json_data_new_proveedor['prov_razon_social']
-            proveedor.prov_telefono = json_data_new_proveedor['prov_telefono']
-            proveedor.save()
-        if request.user.is_authenticated:
+    if request.user.has_perm('user.change_proveedor'):
+        try:
+            if request.method == "POST":
+                prov_nit = request.POST.get('prov_nit')
+                prov_razon_social = request.POST.get('prov_razon_social')
+                prov_telefono = request.POST.get('prov_telefono')
+                proveedor = Proveedor.objects.get(prov_nit = prov_nit)
+                json_structure_new_proveedor = "{"+f""""prov_nit" : "{prov_nit}","prov_razon_social" : "{prov_razon_social}", "prov_telefono": "{prov_telefono}" """ + "}" 
+                json_data_new_proveedor = json.loads(json_structure_new_proveedor)
+                proveedor.prov_nit = json_data_new_proveedor['prov_nit']
+                proveedor.prov_razon_social = json_data_new_proveedor['prov_razon_social']
+                proveedor.prov_telefono = json_data_new_proveedor['prov_telefono']
+                proveedor.save()
+            if request.user.is_authenticated:
+                proveedores = Proveedor.objects.all()
+                return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db": proveedores})
+            else:
+                return render(request, "main_dash/index.html")
+        except Exception as error:
+            messages.error(request, "Su solicitud no puedo ser procesada: " + str(error))
             proveedores = Proveedor.objects.all()
-            return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db": proveedores})
-        else:
-            return render(request, "main_dash/index.html")
-    except Exception as error:
-        messages.error(request, "Su solicitud no puedo ser procesada: " + str(error))
+            return render(request, "admin_dash/productos_admin.html", {"proveedores_en_db" : proveedores})
+    else:
+        messages.error(request, "Usted no tiene los permisos necesarios para desarrollar esta acción.")
         proveedores = Proveedor.objects.all()
-        return render(request, "admin_dash/productos_admin.html", {"proveedores_en_db" : proveedores})
-    
+        return render(request, "admin_dash/productos_admin.html", {"proveedores_en_db" : proveedores})    
 
 @login_required
 def materiales_update(request, material_id):
-    material = Material.objects.get(mat_id = material_id)
-    proveedores = Proveedor.objects.all()
-    return render(request, "update_templates/materiales_update.html", {"materiales" : material, "proveedores_en_db": proveedores})
-
-@login_required
-def update_material(request):
-    try:
-        if request.method == "POST":
-            mat_id_given = request.POST.get('mat_id')
-            mat_pro_id = request.POST.get('mat_prov_id')
-            stock = request.POST.get('stock')
-            nombre = request.POST.get('nombre')
-            material = Material.objects.get(mat_id = mat_id_given)
-            json_structure_new_material = "{"+f""""mat_id" : "{mat_id_given}", "stock": "{stock}", "nombre":"{nombre}" """ + "}" 
-            json_data_new_material = json.loads(json_structure_new_material)
-            proveedor = Proveedor.objects.get(prov_nit = mat_pro_id)
-            material.mat_id = json_data_new_material['mat_id']
-            material.mat_prov_id = proveedor
-            material.stock = json_data_new_material['stock']
-            material.nombre = json_data_new_material['nombre']
-            material.save()
+    if request.user.has_perm('crud.change_material'):
+        material = Material.objects.get(mat_id = material_id)
+        proveedores = Proveedor.objects.all()
+        return render(request, "update_templates/materiales_update.html", {"materiales" : material, "proveedores_en_db": proveedores})
+    else:
+        if request.user.has_perm('crud.view_material'):
+            messages.error(request, "Usted no tiene los permisos suficientes para desarrollar esta acción.")
             materiales = Material.objects.all()
             proveedores = Proveedor.objects.all()
             return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
-    except Exception as error:
-        messages.error(request, "Ha ocurrido un grave error: " + str(error))
+        else: 
+            return render(request, "admin_dash/main.html")
+
+
+@login_required
+def update_material(request):
+    if request.user.has_perm('crud.change_material'):
+        try:
+            if request.method == "POST":
+                mat_id_given = request.POST.get('mat_id')
+                mat_pro_id = request.POST.get('mat_prov_id')
+                stock = request.POST.get('stock')
+                nombre = request.POST.get('nombre')
+                material = Material.objects.get(mat_id = mat_id_given)
+                json_structure_new_material = "{"+f""""mat_id" : "{mat_id_given}", "stock": "{stock}", "nombre":"{nombre}" """ + "}" 
+                json_data_new_material = json.loads(json_structure_new_material)
+                proveedor = Proveedor.objects.get(prov_nit = mat_pro_id)
+                material.mat_id = json_data_new_material['mat_id']
+                material.mat_prov_id = proveedor
+                material.stock = json_data_new_material['stock']
+                material.nombre = json_data_new_material['nombre']
+                material.save()
+                materiales = Material.objects.all()
+                proveedores = Proveedor.objects.all()
+                return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
+        except Exception as error:
+            messages.error(request, "Ha ocurrido un grave error: " + str(error))
+            materiales = Material.objects.all()
+            proveedores = Proveedor.objects.all()
+            return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
+    else:
+        messages.error(request, "Usted no tiene los permisos suficientes para desarrollar esta acción.")
         materiales = Material.objects.all()
         proveedores = Proveedor.objects.all()
         return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
+
+@login_required
+def update_productos(request, id_actualizacion):
+    pass

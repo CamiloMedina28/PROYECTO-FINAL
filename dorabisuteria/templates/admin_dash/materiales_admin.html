@@ -58,7 +58,11 @@
                         <label for="stock">Stock</label>
                     </div>
 
-                    <input type="submit">
+                    {% if permisos_creacion %}
+                    <button class="waves-effect waves-light btn"><input type="submit"></button>
+                    {% else %}
+                    <button class="waves-effect waves-light btn" disabled><input type="submit"></button>
+                    {% endif %}
                 </form>
             </div>
         </div>
@@ -82,8 +86,16 @@
                         <td>{{materiales.mat_prov_id}}</td>
                         <td>{{materiales.nombre}}</td>
                         <td>{{materiales.stock}}</td>
+                        {% if permisos_eliminacion%}
                         <td><button class="waves-effect waves-light red btn"><a href="/eliminar_materiales/{{materiales.mat_id}}">Eliminar</a></button></td>
+                        {% else %}
+                        <td><button class="waves-effect waves-light red btn" disabled><a href="">Eliminar</a></button></td>
+                        {% endif %}
+                        {% if permisos_edicion %}
                         <td><button class="waves-effect waves-light blue btn"><a href="/materiales_update/{{materiales.mat_id}}">Editar</a></button></td>
+                        {% else %}
+                        <td><button class="waves-effect waves-light blue btn" disabled><a href="">Editar</a></button></td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>

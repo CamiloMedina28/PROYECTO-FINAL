@@ -61,7 +61,7 @@
             <h3>Administrar los clientes</h3>
             <img src="{%static 'img/ELEMENTOS/ADMIN DASHBOARD/empleados.png'%}">
             <br>
-            {% if view_cliente %}
+            {% if view_consulta %}
             <button class="btn waves-effect waves-light"><a href="/clientes_admin">Ver más<i class="medium material-icons">archive</i></a></button>
             {% else %}
             <button class="btn waves-effect waves-light" disabled><a href="/clientes_admin">Ver más<i class="medium material-icons">archive</i></a></button>
@@ -73,9 +73,9 @@
             <img src="{%static 'img/ELEMENTOS/ADMIN DASHBOARD/productos.png'%}">
             <br>
             {% if view_materiales %}
-            <button class="btn waves-effect waves-light"><a href="/materiales_admin">Ver más<i class="medium material-icons">archive</i></a></button>
+                <button class="btn waves-effect waves-light"><a href="/materiales_admin">Ver más<i class="medium material-icons">archive</i></a></button>
             {% else %}
-            <button class="btn waves-effect waves-light"><a href="/materiales_admin">Ver más<i class="medium material-icons">archive</i></a></button>
+                <button class="btn waves-effect waves-light" disabled¬><a href="/materiales_admin">Ver más<i class="medium material-icons">archive</i></a></button>
             {% endif %}
         </div>
     </div>

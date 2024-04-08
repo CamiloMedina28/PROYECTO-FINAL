@@ -32,7 +32,11 @@
             <tr>
                 <td>{{consultas.con_cli_per_id}}</td>
                 <td>{{consultas.con_comentario}}</td>
+                {% if permisos_eliminacion %}
                 <td><button class="waves-effect waves-light red btn"><a href="/eliminar_consulta/{{consultas.id}}">Eliminar</a></button></td>
+                {% else %}
+                <td><button class="waves-effect waves-light red btn" disabled><a href="">Eliminar</a></button></td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

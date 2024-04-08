@@ -76,8 +76,11 @@
                         </select>              
                     </div>
 
-                    <input type="submit">
-
+                    {% if permiso_adicion %}
+                    <button class="waves-effect waves-light btn"><input type="submit"></button>
+                    {% else %}
+                    <button class="waves-effect waves-light btn" disabled><input type="submit"></button>
+                    {% endif %}
                 </form>
             </div>
         </div>
@@ -97,12 +100,20 @@
                 <tbody>
                     {%for productos in productos_en_db%}
                     <tr>
-                        <td>{{productos.pro_id}}</td>
-                        <td>{{productos.pro_nombre}}</td>
-                        <td>{{productos.pro_precio}}</td>
-                        <td>{{productos.pro_stock}}</td>
+                        <td>{{productos.pro_id}}</td> <!--ID del producto -->
+                        <td>{{productos.pro_nombre}}</td> <!--Nombre del producto -->
+                        <td>{{productos.pro_precio}}</td> <!--Precio del producto -->
+                        <td>{{productos.pro_stock}}</td> <!--Stock del producto -->
+                        {% if permiso_eliminacion %}
                         <td><button class="waves-effect waves-light red btn"><a href="/eliminar_producto/{{productos.pro_id}}">Eliminar</a></button></td>
-                        <td><button class="waves-effect waves-light blue btn"><a>Editar</a></button></td>
+                        {% else %}
+                        <td><button class="waves-effect waves-light red btn" disabled><a href="">Eliminar</a></button></td>
+                        {% endif %}
+                        {% if permiso_edicion %}
+                        <td><button class="waves-effect waves-light blue btn"><a href="/update_productos/{{productos.pro_id}}">Editar</a></button></td>
+                        {% else %}
+                        <td><button class="waves-effect waves-light blue btn" disabled><a>Editar</a></button></td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
