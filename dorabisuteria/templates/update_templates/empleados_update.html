@@ -1,0 +1,47 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleados</title>
+    <link rel="stylesheet" type="text/css" href='{%static "\styles\PROVEEDORES/prov.css"%}'>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <!-- Compiled and minified JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="icon" type="image" href='{% static "img/LOGOS/logo 1 redim.png"%}'>
+</head>
+
+<body>
+    <button class="waves-effect waves-light btn"><a href="/employees_administration">Volver</a></button>
+    <h1>Actualización de empleados</h1>
+
+    <div class="col s4">
+        <div>
+            <form action="/" method="POST">
+                {% csrf_token %}
+                <!-- <div class="row input-field">
+                    <i class="material-icons prefix">assignment_ind</i>
+                    <input id="prov_nit" type="number" value="{{proveedor_editar.prov_nit}}" name="prov_nit" class="validate" readonly>
+                    <label for="prov_nit">NIT del proveedor</label>
+                </div>
+
+                <div class="row input-field">
+                    <i class="material-icons prefix">assignment</i>
+                    <input id="prov_razon_social" type="text" value="{{proveedor_editar.prov_razon_social}}" name="prov_razon_social" class="validate" required>
+                    <label for="prov_razon_social">Razon Social</label>
+                </div>
+
+                <div class="row input-field">
+                    <i class="material-icons prefix">attach_money</i>
+                    <input id="prov_telefono" value="{{proveedor_editar.prov_telefono}}" type="number" name="prov_telefono" class="validate" required>
+                    <label for="prov_telefono">Teléfono</label>
+                </div> -->
+
+                <button class="waves-effect waves-light btn"><input type="submit"></button>
+            </form>
+        </div>
+</body>

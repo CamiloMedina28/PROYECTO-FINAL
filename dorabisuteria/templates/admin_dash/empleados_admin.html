@@ -22,7 +22,7 @@
     <p>Para crear nuevos usuarios, llene el formulario</p>
     <p>Para eliminar usuarios use el botón eliminar</p>
     <p>Para editar el usuario y <strong>CAMBIAR PERMISOS</strong> use la opción Editar. <br>
-       por default, el usuario tiene </p>
+       por default, el usuario no tiene ningún permiso</p>
 
 
     <div class="row">
@@ -92,10 +92,14 @@
                             <td><button class="waves-effect waves-light red btn" disabled><a href="/eliminar_usuarios/{{usuarios.id}}">Eliminar</a></button></td>
                             <td><button class="waves-effect waves-light btn" disabled><a>Editar</a></button></td>
                         {% else %}
+                            {% if usuario_actual.is_superuser %}
                             <td><button class="waves-effect waves-light red btn"><a href="/eliminar_usuarios/{{usuarios.id}}">Eliminar</a></button></td>
                             <td><button class="waves-effect waves-light blue btn"><a>Editar</a></button></td>
+                            {% else %}
+                            <td><button class="waves-effect waves-light red btn" disabled><a href="/eliminar_usuarios/{{usuarios.id}}">Eliminar</a></button></td>
+                            <td><button class="waves-effect waves-light blue btn" disabled><a>Editar</a></button></td>
+                            {% endif %}
                         {% endif %}
-                        
                     </tr>
                     {% endfor %}
                 </tbody>

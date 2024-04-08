@@ -28,35 +28,55 @@
             <h3>Administrar los productos</h3>
             <img src="{%static 'img/ELEMENTOS/ADMIN DASHBOARD/productos.png'%}">
             <br>
+            {% if view_producto %}
             <button class="btn waves-effect waves-light"><a href="/products_administration">Ver más<i class="medium material-icons">archive</i></a></button>
+            {% else %}
+            <button class="btn waves-effect waves-light" disabled><a href="/products_administration">Ver más<i class="medium material-icons">archive</i></a></button>
+            {% endif %}
         </div>
 
         <div id="cont2">
             <h3>Administrar los proveedores</h3>
             <img src="{%static 'img/ELEMENTOS/ADMIN DASHBOARD/proveedores.png'%}">
             <br>
+            {% if view_proveedor %}
             <button class="btn waves-effect waves-light"><a href="/prov_administration">Ver más<i class="medium material-icons">archive</i></a></button>
+            {% else %}
+            <button class="btn waves-effect waves-light" disabled><a href="/prov_administration">Ver más<i class="medium material-icons">archive</i></a></button>
+            {% endif %}
         </div>
 
         <div id="cont3">
             <h3>Administrar los empleados</h3>
             <img src="{%static 'img/ELEMENTOS/ADMIN DASHBOARD/empleados.png'%}">
             <br>
+            {% if view_empleados %}
             <button class="btn waves-effect waves-light"><a href="/employees_administration">Ver más<i class="medium material-icons">archive</i></a></button>
+            {% else %}
+            <button class="btn waves-effect waves-light" disabled><a href="/employees_administration">Ver más<i class="medium material-icons">archive</i></a></button>
+            {% endif %}
         </div>
 
         <div id="cont4">
             <h3>Administrar los clientes</h3>
             <img src="{%static 'img/ELEMENTOS/ADMIN DASHBOARD/empleados.png'%}">
             <br>
+            {% if view_cliente %}
             <button class="btn waves-effect waves-light"><a href="/clientes_admin">Ver más<i class="medium material-icons">archive</i></a></button>
+            {% else %}
+            <button class="btn waves-effect waves-light" disabled><a href="/clientes_admin">Ver más<i class="medium material-icons">archive</i></a></button>
+            {% endif %}
         </div>
 
         <div id="cont5">
             <h3>Administrar los materiales</h3>
             <img src="{%static 'img/ELEMENTOS/ADMIN DASHBOARD/productos.png'%}">
             <br>
+            {% if view_materiales %}
             <button class="btn waves-effect waves-light"><a href="/materiales_admin">Ver más<i class="medium material-icons">archive</i></a></button>
+            {% else %}
+            <button class="btn waves-effect waves-light"><a href="/materiales_admin">Ver más<i class="medium material-icons">archive</i></a></button>
+            {% endif %}
         </div>
     </div>
 </body>
