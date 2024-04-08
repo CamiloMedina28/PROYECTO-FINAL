@@ -18,6 +18,14 @@ urlpatterns = [
     path('insert_new_prov', views.insert_new_prov, name="insert_new_prov"), 
     path('eliminar_proveedores/<prov_nit_eliminar>', views.eliminar_proveedores, name="eliminar_proveedores"), 
     path('materiales_admin', views.materiales_admin, name="materiales_admin"), 
-    path('insert_new_mat', views.insert_new_mat, name="insert_new_mat")
+    path('insert_new_mat', views.insert_new_mat, name="insert_new_mat"), 
+    path('clientes_admin', views.clientes_admin, name="clientes_admin"), 
+    path('eliminar_consulta/<id_consulta_eliminar>', views.eliminar_consulta, name="eliminar_consulta"), 
+    path('create_new_user', views.create_new_user, name="create_new_user"), 
+    path('eliminar_usuarios/<id_usuario_eliminar>', views.eliminar_usuarios, name="eliminar_usuarios"), 
+    path('proveedores_update/<prov_nit_edit>', views.proveedores_update, name="proveedores_update"), 
+    path('editar_proveedor', views.editar_proveedor, name="editar_proveedor"), 
+    path('materiales_update/<material_id>', views.materiales_update, name="materiales_update"), 
+    path('update_material', views.update_material, name="update_material")
 ]
 

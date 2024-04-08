@@ -8,14 +8,14 @@ h1{
     font-size: medium;
 }
 
-// body{
-//     background-color: aqua;
-// }
-
 select{
     display: block;
 }
 
 form {
     padding: 8px;
+}
+
+button > a{
+    color: white;
 }

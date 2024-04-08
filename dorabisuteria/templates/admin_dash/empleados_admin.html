@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empleados</title>
-    <link rel="stylesheet" type="text/css" href='{%static "\styles\main_admin_dash\main_admin_dash.css"%}'>
+    <link rel="stylesheet" type="text/css" href='{%static "\styles\PROVEEDORES/prov.css"%}'>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Icons -->
@@ -17,4 +17,92 @@
 
 <body>
     <h1>Administración de empleados</h1>
+    <button class="waves-effect waves-light btn"><a href="/admin_dash">Volver</a></button>
+    <h3>Bienvenido a la sección de gestión para empleados</h3>
+    <p>Para crear nuevos usuarios, llene el formulario</p>
+    <p>Para eliminar usuarios use el botón eliminar</p>
+    <p>Para editar el usuario y <strong>CAMBIAR PERMISOS</strong> use la opción Editar. <br>
+       por default, el usuario tiene </p>
+
+
+    <div class="row">
+        <div class="col s3">
+            <h3>Gestión de empleados</h3>
+            <div>
+                <form action="/create_new_user" method="POST">
+                    {% csrf_token %}
+                    <div class="row input-field">
+                        <i class="material-icons prefix">assignment_ind</i>
+                        <input id="new_user_first_name" type="text" name="new_user_first_name" class="validate" required>
+                        <label for="new_user_first_name">Nombre</label>
+                    </div>
+
+                    <div class="row input-field">
+                        <i class="material-icons prefix">assignment</i>
+                        <input id="new_user_last_name" type="text" name="new_user_last_name" class="validate" required>
+                        <label for="new_user_last_name">Apellido</label>
+                    </div>
+
+                    <div class="row input-field">
+                        <i class="material-icons prefix">attach_money</i>
+                        <input id="new_user_email" type="email" name="new_user_email" class="validate" required>
+                        <label for="new_user_email">Correo electrónico</label>
+                    </div>
+
+                    <div class="row input-field">
+                        <i class="material-icons prefix">attach_money</i>
+                        <input id="new_username" type="text" name="new_username" class="validate" required>
+                        <label for="new_username">Usuario</label>
+                    </div>
+
+                    <div class="row input-field">
+                        <i class="material-icons prefix">attach_money</i>
+                        <input id="new_user_password" type="password" name="new_user_password" class="validate" required>
+                        <label for="new_user_password">Contraseña</label>
+                    </div>
+
+                    <button class="waves-effect waves-light btn"><input type="submit"></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col s9">
+            <table class="striped centered responsive-table">
+                <h3>Listado de empleados</h3>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Ultima vez</th>
+                        <th>Correo</th>
+                        <th>Usuario</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {%for usuarios in usuarios_en_db%}
+                    <tr>
+                        
+                        <td>{{usuarios.id}}</td>
+                        <td>{{usuarios.first_name}} {{usuarios.last_name}}</td>
+                        <td>{{usuarios.last_login}}</td>
+                        <td>{{usuarios.email}}</td>
+                        <td>{{usuarios.get_username}}</td>
+                        {% if usuarios.is_superuser %}
+                            <td><button class="waves-effect waves-light red btn" disabled><a href="/eliminar_usuarios/{{usuarios.id}}">Eliminar</a></button></td>
+                            <td><button class="waves-effect waves-light btn" disabled><a>Editar</a></button></td>
+                        {% else %}
+                            <td><button class="waves-effect waves-light red btn"><a href="/eliminar_usuarios/{{usuarios.id}}">Eliminar</a></button></td>
+                            <td><button class="waves-effect waves-light blue btn"><a>Editar</a></button></td>
+                        {% endif %}
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 </body>

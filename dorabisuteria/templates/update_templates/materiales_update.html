@@ -1,0 +1,67 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proveedores</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href='{%static "\styles\PROVEEDORES/prov.css"%}'>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="icon" type="image" href='{% static "img/LOGOS/logo 1 redim.png"%}'>
+    <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script> 
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Actualización de materiales</h1>
+
+    <button class="waves-effect waves-light btn"><a href="/admin_dash">Volver</a></button>
+
+    <div class="col s4">
+        <h3>Gestión de materiales</h3>
+        <div>
+            <form action="/update_material" method="POST">
+                {% csrf_token %}
+
+                <div class="row input-field">
+                    <i class="material-icons prefix">assignment_ind</i>
+                    <input id="mat_id" type="number" value="{{materiales.mat_id}}" name="mat_id" class="validate" readonly>
+                    <label for="mat_id">Id del material</label>
+                </div>
+
+                <div>
+                    <label>Seleccione el proveedor</label>
+                    <select name="mat_prov_id" required>
+                       <option value = "{{materiales.mat_prov_id}}" selected>{{materiales.mat_prov_id}}</option>
+                       {% for proveedor in proveedores_en_db%}
+                            <option value={{proveedor.prov_nit}}>{{proveedor.prov_nit}} - {{proveedor.prov_razon_social}}</option>
+                       {% endfor %}
+                    </select>              
+                </div>
+
+                <div class="row input-field">
+                    <i class="material-icons prefix">assignment</i>
+                    <input id="nombre" type="text" value="{{materiales.nombre}}" name="nombre" class="validate" required>
+                    <label for="nombre">nombre</label>
+                </div>
+
+                <div class="row input-field">
+                    <i class="material-icons prefix">attach_money</i>
+                    <input id="stock" type="number" value="{{materiales.stock}}" name="stock" class="validate" required>
+                    <label for="stock">Stock</label>
+                </div>
+
+                <button class="waves-effect waves-light btn"><input type="submit"></button>
+            </form>
+        </div>
+    </div>
+
+        
+</body>

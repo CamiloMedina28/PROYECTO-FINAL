@@ -17,8 +17,8 @@ class Persona(models.Model):
         verbose_name_plural = 'Personas'
 
     def __str__(self) -> str:
-        texto = "id: {0} - nombre: {1} - apellido: {2}"
-        return  texto.format(self.per_id, self.per_primer_nombre, self.per_primer_apellido)
+        texto = "nombre: {0} - apellido: {1} - correo: {2}"
+        return  texto.format(self.per_primer_nombre, self.per_primer_apellido, self.per_email)
 
 class Cliente(Persona):
 
@@ -91,5 +91,5 @@ class Producto(models.Model):
         verbose_name_plural = "Productos"
 
     def __str__(self) -> str:
-        texto = "id_proveedor: {0} - id_material: {1} - nombre: {2} - precio: {3}"
-        return texto.format(self.pro_id, self.materiales, self.pro_nombre, self.pro_precio)
+        texto = "id_proveedor: {0} - nombre: {1} - precio: {2}"
+        return texto.format(self.pro_id, self.pro_nombre, self.pro_precio)

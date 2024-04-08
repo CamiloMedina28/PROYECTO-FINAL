@@ -10,4 +10,8 @@ select {
 
 form {
   padding: 8px;
+}
+
+button > a {
+  color: white;
 }/*# sourceMappingURL=admin_productos.css.map */

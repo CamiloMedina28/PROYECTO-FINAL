@@ -16,5 +16,27 @@
 </head>
 
 <body>
+    <button class="waves-effect waves-light btn"><a href="/admin_dash">Volver</a></button>
+
     <h1>Administración de clientes y dudas</h1>
+    <table class="striped centered responsive-table">
+        <thead>
+            <tr>
+                <th>Información del cliente</th>
+                <th>Comentario realizado</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {%for consultas in consultas_en_db%}
+            <tr>
+                <td>{{consultas.con_cli_per_id}}</td>
+                <td>{{consultas.con_comentario}}</td>
+                <td><button class="waves-effect waves-light red btn"><a href="/eliminar_consulta/{{consultas.id}}">Eliminar</a></button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
 </body>

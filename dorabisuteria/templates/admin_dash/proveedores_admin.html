@@ -18,7 +18,7 @@
 <body>
     <h1>Administración de proveedores</h1>
 
-    <button><a href="/admin_dash">Volver</a></button>
+    <button class="waves-effect waves-light btn"><a href="/admin_dash">Volver</a></button>
 
     <div class="row">
         <div class="col s4">
@@ -66,8 +66,8 @@
                         <td>{{proveedores.prov_nit}}</td>
                         <td>{{proveedores.prov_razon_social}}</td>
                         <td>{{proveedores.prov_telefono}}</td>
-                        <td><button><a href="/eliminar_proveedores/{{proveedores.prov_nit}}">Eliminar</a></button></td>
-                        <td><button><a>Editar</a></button></td>
+                        <td><button class="waves-effect waves-light red btn"><a href="/eliminar_proveedores/{{proveedores.prov_nit}}">Eliminar</a></button></td>
+                        <td><button class="waves-effect waves-light blue btn"><a href="/proveedores_update/{{proveedores.prov_nit}}">Editar</a></button></td>
                     </tr>
                     {% endfor %}
                 </tbody>

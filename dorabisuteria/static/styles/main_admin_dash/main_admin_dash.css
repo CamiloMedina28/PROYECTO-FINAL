@@ -21,7 +21,7 @@ h1 {
 }
 
 .contenedor_opciones #cont1 {
-  width: 20%;
+  width: 30%;
   box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   padding: 2px;
@@ -40,7 +40,7 @@ h1 {
 }
 
 .contenedor_opciones #cont2 {
-  width: 20%;
+  width: 30%;
   box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   padding: 2px;
@@ -59,7 +59,7 @@ h1 {
 }
 
 .contenedor_opciones #cont3 {
-  width: 20%;
+  width: 30%;
   box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   padding: 2px;
@@ -78,7 +78,7 @@ h1 {
 }
 
 .contenedor_opciones #cont4 {
-  width: 20%;
+  width: 30%;
   box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   padding: 2px;
@@ -97,7 +97,7 @@ h1 {
 }
 
 .contenedor_opciones #cont5 {
-  width: 20%;
+  width: 30%;
   box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   padding: 2px;
@@ -116,7 +116,7 @@ h1 {
 }
 
 .contenedor_opciones #cont1:hover {
-  width: 20%;
+  width: 30%;
   box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   padding: 2px;
@@ -135,7 +135,7 @@ h1 {
 }
 
 .contenedor_opciones #cont2:hover {
-  width: 20%;
+  width: 30%;
   box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   padding: 2px;
@@ -154,7 +154,7 @@ h1 {
 }
 
 .contenedor_opciones #cont3:hover {
-  width: 20%;
+  width: 30%;
   box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   padding: 2px;
@@ -173,7 +173,7 @@ h1 {
 }
 
 .contenedor_opciones #cont4:hover {
-  width: 20%;
+  width: 30%;
   box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   padding: 2px;
@@ -192,7 +192,7 @@ h1 {
 }
 
 .contenedor_opciones #cont5:hover {
-  width: 20%;
+  width: 30%;
   box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   padding: 2px;
