@@ -44,19 +44,19 @@
                     </div>
 
                     <div class="row input-field">
-                        <i class="material-icons prefix">attach_money</i>
+                        <i class="material-icons prefix">email</i>
                         <input id="new_user_email" type="email" name="new_user_email" class="validate" required>
                         <label for="new_user_email">Correo electrónico</label>
                     </div>
 
                     <div class="row input-field">
-                        <i class="material-icons prefix">attach_money</i>
+                        <i class="material-icons prefix">person</i>
                         <input id="new_username" type="text" name="new_username" class="validate" required>
                         <label for="new_username">Usuario</label>
                     </div>
 
                     <div class="row input-field">
-                        <i class="material-icons prefix">attach_money</i>
+                        <i class="material-icons prefix">apps</i>
                         <input id="new_user_password" type="password" name="new_user_password" class="validate" required>
                         <label for="new_user_password">Contraseña</label>
                     </div>
@@ -102,9 +102,9 @@
                             <td><button class="waves-effect waves-light red btn" disabled><a href="">Eliminar</a></button></td>
                             {% endif %}
                             {% if permisos_edicion %}
-                            <td><button class="waves-effect waves-light blue btn"><a>Editar</a></button></td>
+                            <td><button class="waves-effect waves-light blue btn"><a href="/empleados_update/{{usuarios.id}}">Editar</a></button></td>
                             {% else %}
-                            <td><button class="waves-effect waves-light blue btn" disabled><a>Editar</a></button></td>
+                            <td><button class="waves-effect waves-light blue btn" disabled><a href="">Editar</a></button></td>
                             {% endif %}
                         {% endif %}
                     </tr>

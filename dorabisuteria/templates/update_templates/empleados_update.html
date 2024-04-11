@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empleados</title>
-    <link rel="stylesheet" type="text/css" href='{%static "\styles\PROVEEDORES/prov.css"%}'>
+    <link rel="stylesheet" type="text/css" href='{%static "\styles\Empleados/empleados.css"%}'>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Icons -->
@@ -21,26 +21,54 @@
 
     <div class="col s4">
         <div>
-            <form action="/" method="POST">
+            <form action="/actualizar_empleado/{{usuario.id}}" method="POST">
                 {% csrf_token %}
-                <!-- <div class="row input-field">
-                    <i class="material-icons prefix">assignment_ind</i>
-                    <input id="prov_nit" type="number" value="{{proveedor_editar.prov_nit}}" name="prov_nit" class="validate" readonly>
-                    <label for="prov_nit">NIT del proveedor</label>
-                </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">assignment_ind</i>
+                        <input id="id_user_act" disabled value="{{usuario.id}}" type="number" name="id_user_act" class="validate" required>
+                        <label for="id_user_act">ID</label>
+                    </div>
 
-                <div class="row input-field">
-                    <i class="material-icons prefix">assignment</i>
-                    <input id="prov_razon_social" type="text" value="{{proveedor_editar.prov_razon_social}}" name="prov_razon_social" class="validate" required>
-                    <label for="prov_razon_social">Razon Social</label>
-                </div>
+                   <div class="row input-field">
+                       <i class="material-icons prefix">assignment_ind</i>
+                       <input id="new_user_first_name" disabled value="{{usuario.first_name}}" type="text" name="new_user_first_name" class="validate" required>
+                       <label for="new_user_first_name">Nombre</label>
+                   </div>
 
-                <div class="row input-field">
-                    <i class="material-icons prefix">attach_money</i>
-                    <input id="prov_telefono" value="{{proveedor_editar.prov_telefono}}" type="number" name="prov_telefono" class="validate" required>
-                    <label for="prov_telefono">Teléfono</label>
-                </div> -->
+                   <div class="row input-field">
+                       <i class="material-icons prefix">assignment</i>
+                       <input id="new_user_last_name" value="{{usuario.last_name}}" type="text" name="new_user_last_name" class="validate" required>
+                       <label for="new_user_last_name">Apellido</label>
+                   </div>
 
+                   <div class="row input-field">
+                       <i class="material-icons prefix">email</i>
+                       <input id="new_user_email" value="{{usuario.email}}" type="email" name="new_user_email" class="validate" required>
+                       <label for="new_user_email">Correo electrónico</label>
+                   </div>
+
+                   <div class="row input-field">
+                       <i class="material-icons prefix">person</i>
+                       <input id="new_username" disabled value="{{usuario.username}}" type="text" name="new_username" class="validate" required>
+                       <label for="new_username">Usuario</label>
+                   </div>
+                   <br>
+                   <div class="checkboxes">
+                    <div class="row input-field">
+                        {% for permiso in permisos%}
+                            {% if permiso in permisos_usuario%}
+                                <input type="checkbox" id="mycheck" checked="checked" name="{{permiso}}" value="{{permiso}}"><label id="labels_check" for="mycheck">{{permiso}}</label>
+                                <br>
+                            {% else %}
+                                <input type="checkbox" id="mycheck" name="{{permiso}}" value="{{permiso}}"><label id="labels_check" for="mycheck">{{permiso}}</label>
+                                <br>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                   </div>
+                   
+                   
                 <button class="waves-effect waves-light btn"><input type="submit"></button>
             </form>
         </div>

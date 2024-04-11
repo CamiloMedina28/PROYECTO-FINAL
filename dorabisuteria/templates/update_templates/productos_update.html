@@ -1,0 +1,89 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href='{%static "\styles\ADMINISTRACION PRODUCTOS\admin_productos.css"%}'>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="icon" type="image" href='{% static "img/LOGOS/logo 1 redim.png"%}'>
+    <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script> 
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
+</head>
+
+<body>
+    <button class="waves-effect waves-light btn"><a href="/products_administration">Volver</a></button>
+    <h1>Actualización de productos</h1>
+
+    <div class="col s4">
+        <div>
+            <form action="/actualizar_producto" method="POST">
+                {% csrf_token %}
+                <div class="row input-field">
+                    <i class="material-icons prefix">assignment_ind</i>
+                    <input id="pro_id" type="text" value="{{producto_editar.pro_id}}" name="pro_id" class="validate" disabled>
+                    <label for="pro_id">ID de producto</label>
+                </div>
+
+                <div class="row input-field">
+                    <i class="material-icons prefix">assignment</i>
+                    <input id="pro_nombre" type="text" value="{{producto_editar.pro_nombre}}" name="pro_nombre" class="validate" required>
+                    <label for="pro_nombre">Nombre</label>
+                </div>
+
+                <div class="row input-field">
+                    <i class="material-icons prefix">attach_money</i>
+                    <input id="pro_precio" type="number" value="{{producto_editar.pro_precio}}" name="pro_precio" class="validate" required>
+                    <label for="pro_precio">Precio</label>
+                </div>
+
+                <div class="row input-field">
+                    <i class="material-icons prefix">book</i>
+                    <input id="pro_stock" type="number" value="{{producto_editar.pro_stock}}" name="pro_stock" class="validate" required>
+                    <label for="pro_stock">Stock</label>
+                </div>
+
+                <div class="row file-field input-field">
+                    <div class="btn">
+                        <span>Imagen</span>
+                         <input  type="file">  <!-- # name="pro_img" -->
+                    </div>
+                    <div class="row file-path-wrapper">
+                      <input name="pro_img" class="file-path validate" type="file">
+                    </div>
+                    <img src={{producto_editar.pro_img.url}}>
+                </div>
+
+
+                <h5>Materiales actuales</h5>
+                {% for materiales in materiales_producto %}
+                    <input type="checkbox" name="mat{{materiales.mat_id}}" value="{{materiales.mat_id}}" checked>
+                    <label for="mat{{materiales.mat_id}}"> {{materiales.nombre}}</label>
+                {% endfor %}
+
+                <div class="input-field col s12">
+                    <label>Seleccione los materiales</label>
+                    <select name="materiales" multiple>
+                       {% for materiales in material_en_db%}
+                            <option value={{materiales.mat_id}}>{{materiales.mat_id}} - {{materiales.nombre}}</option>
+                       {% endfor %}
+                    </select>              
+                </div>
+
+                    
+                
+                
+                <button class="waves-effect waves-light btn"><input type="submit"></button>
+                
+            </form>
+        </div>
+</body>

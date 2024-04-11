@@ -59,16 +59,16 @@
                     <div class="row file-field input-field">
                         <div class="btn">
                             <span>Imagen</span>
-                             <input  type="file">  <!-- # name="pro_img" -->
+                             <input type="file">  <!-- # name="pro_img" -->
                         </div>
                         <div class="row file-path-wrapper">
-                          <input name="pro_img" class="file-path validate" type="file">
+                          <input name="pro_img" required class="file-path validate" type="file">
                         </div>
                     </div>
 
                     <div>
                         <label>Seleccione los materiales</label>
-                        <select name="materiales" multiple>
+                        <select name="materiales" required multiple>
                            <option value = "" disabled selected>Seleccione materiales</option>
                            {% for materiales in material_en_db%}
                                 <option value={{materiales.mat_id}}>{{materiales.mat_id}} - {{materiales.nombre}}</option>

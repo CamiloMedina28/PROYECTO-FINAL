@@ -1,15 +1,19 @@
 import json
 import os
+from django.http import JsonResponse
+from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Consulta, Producto, Material, Proveedor, Material
+from .models import Consulta, Producto, Material, Proveedor, Material, Cliente
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import User
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.views import View
 
-# Create your views here.
 
 def inventario(request):
     return render (request, "login/login.html")
@@ -54,6 +58,88 @@ def user_logout(request):
     logout(request)
     return render(request, "main_dash/index.html")
 
+class ProductsView(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        productos = list(Producto.objects.values())
+        info = {"productos_en_db" : productos}
+        return JsonResponse(info)
+
+    def post(self, request):
+        json_info = json.loads(request.body)
+        print(json_info)
+        Producto.objects.create()
+        datos = {'message': 'Proceso exitoso'}
+
+    def put(self, request):
+        pass
+
+    def delete(self, request):
+        pass
+
+class MaterialView(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        materiales = list(Material.objects.values())
+        proveedores = list(Proveedor.objects.values())
+        datos = {"materiales_en_db": materiales, 
+                "proveedores_en_db": proveedores}
+        return JsonResponse(datos)
+
+    def post(self,request):
+        pass
+
+    def put(self, request):
+        pass
+
+    def delete(self, request):
+        pass
+
+class ProveedorView(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        proveedores = list(Proveedor.objects.values())
+        datos = {"proveedores_en_db": proveedores}
+        return JsonResponse(datos)
+
+    def post(self,request):
+        pass
+
+    def put(self, request):
+        pass
+
+    def delete(self, request):
+        pass
+
+class ConsultaView(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        clientes = list(Cliente.objects.values())
+        consulta = list(Consulta.objects.values())
+        return JsonResponse({"consultas_en_db": consulta, 
+                             "clientes": clientes})
+
+    def post(self,request):
+        pass
+
+    def put(self, request):
+        pass
+
+    def delete(self, request):
+        pass
+
 @login_required
 def products_administration(request):
     if request.user.has_perm('crud.view_producto'):
@@ -83,14 +169,11 @@ def prov_administration(request):
     if request.user.has_perm('crud.view_proveedor'):
         try:
             if request.user.is_authenticated:
-                permisos_creacion = request.user.has_perm('crud.add_proveedor')
-                permisos_eliminacion= request.user.has_perm('crud.delete_proveedor')
-                permisos_edicion = request.user.has_perm('crud.change_proveedor')
                 proveedores = Proveedor.objects.all()
                 return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db": proveedores, 
-                                                                             "permisos_creacion":permisos_creacion, 
-                                                                             "permisos_eliminacion":permisos_eliminacion, 
-                                                                             "permisos_edicion": permisos_edicion})
+                                                                             "permisos_creacion": request.user.has_perm('crud.add_proveedor'), 
+                                                                             "permisos_eliminacion": request.user.has_perm('crud.delete_proveedor'), 
+                                                                             "permisos_edicion": request.user.has_perm('crud.change_proveedor')})
             else:
                 return render(request, "main_dash/index.html")
         except Exception as error:
@@ -119,7 +202,11 @@ def insert_new_products(request):
                     messages.error(request, "El nombre o el id de producto ya existen en la base de datos")
                     productos = Producto.objects.all()
                     materiales = Material.objects.all()
-                    return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, "material_en_db" : materiales})
+                    return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, 
+                                                                               "material_en_db" : materiales, 
+                                                                                "permiso_adicion": request.user.has_perm('crud.add_producto'), 
+                                                                                "permiso_eliminacion":request.user.has_perm('crud.delete_producto'), 
+                                                                                "permiso_edicion": request.user.has_perm('crud.change_producto')})
                 json_structure_new_product = "{"+f""""pro_id" : "{pro_id}","pro_nombre" : "{pro_nombre}", "pro_precio": "{pro_precio}", "pro_stock":"{pro_stock}", "pro_img":"{pro_img}" """ + "}" 
                 json_data_new_product = json.loads(json_structure_new_product)
                 nuevo_producto = Producto(pro_id = json_data_new_product['pro_id'], 
@@ -128,19 +215,28 @@ def insert_new_products(request):
                                           pro_stock = json_data_new_product['pro_stock'], 
                                           pro_img = json_data_new_product['pro_img'])
                 nuevo_producto.save()
-                for material_elegido in materiales:
-                    nuevo_producto.materiales.add(material_elegido)
+                for i in material_elegido:
+                    nuevo_producto.materiales.add(i)
+                nuevo_producto.save()
             if request.user.is_authenticated:
                 productos = Producto.objects.all()
                 materiales = Material.objects.all()
-                return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, "material_en_db" : materiales})
+                return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, 
+                                                                           "material_en_db" : materiales, 
+                                                                           "permiso_adicion": request.user.has_perm('crud.add_producto'), 
+                                                                           "permiso_eliminacion":request.user.has_perm('crud.delete_producto'), 
+                                                                           "permiso_edicion": request.user.has_perm('crud.change_producto')})
             else:
                 return render(request, "/main_dash/index.html")
         except Exception as error:
             messages.error(request, "Ha ocurrido un error al intentar procesar su solicitud" + str(error))
             productos = Producto.objects.all()
             materiales = Material.objects.all()
-            return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, "material_en_db" : materiales})
+            return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, 
+                                                                       "material_en_db" : materiales,
+                                                                       "permiso_adicion": request.user.has_perm('crud.add_producto'), 
+                                                                        "permiso_eliminacion":request.user.has_perm('crud.delete_producto'), 
+                                                                        "permiso_edicion":request.user.has_perm('crud.change_producto')})
     else: 
         messages.error(request, "Usted no tiene permiso para acceder a esta sección")
         return render(request, "admin_dash/main.html")
@@ -155,17 +251,29 @@ def eliminar_producto(request, pro_id_eliminar):
             producto.delete() # DELETE FROM producto WHERE pro_id = pro_id
             productos = Producto.objects.all()
             materiales = Material.objects.all()
-            return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, "material_en_db" : materiales})
+            return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, 
+                                                                       "material_en_db" : materiales,
+                                                                       "permiso_adicion":request.user.has_perm('crud.add_producto'),
+                                                                       "permiso_eliminacion":request.user.has_perm('crud.delete_producto'),
+                                                                       "permiso_edicion":request.user.has_perm('crud.change_producto')})
         except Exception as error: 
             messages.error(request, "Ha ocurrido un error al intentar procesar la solicitud: " + str(error))
             productos = Producto.objects.all()
             materiales = Material.objects.all()
-            return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, "material_en_db" : materiales})
+            return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, 
+                                                                       "material_en_db" : materiales,
+                                                                       "permiso_adicion":request.user.has_perm('crud.add_producto'),
+                                                                       "permiso_eliminacion":request.user.has_perm('crud.delete_producto'),
+                                                                       "permiso_edicion":request.user.has_perm('crud.change_producto')})
     else:
         messages.error(request, "Usted no tiene los permisos suficientes para hacer esta solicitud")
         productos = Producto.objects.all()
         materiales = Material.objects.all()
-        return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, "material_en_db" : materiales})
+        return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos, 
+                                                                   "material_en_db" : materiales,
+                                                                   "permiso_adicion":request.user.has_perm('crud.add_producto'),
+                                                                   "permiso_eliminacion":request.user.has_perm('crud.delete_producto'),
+                                                                   "permiso_eliminacion":request.user.has_perm('change.crud_producto')})
 
 
 @login_required
@@ -173,22 +281,18 @@ def employees_administration(request):
     if request.user.has_perm("user.view_user"):
         if request.user.is_authenticated:
             usuario_actual = request.user
-            permisos_edicion = usuario_actual.has_perm('user.change_user')
-            permisos_creacion = usuario_actual.has_perm('user.add_user')
-            permisos_eliminacion = usuario_actual.has_perm('user.delete_user')
             users = User.objects.all()
             return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, 
                                                                        "usuario_actual": usuario_actual, 
-                                                                       "permisos_edicion":permisos_edicion,
-                                                                       "permisos_creacion":permisos_creacion, 
-                                                                       "permisos_eliminacion":permisos_eliminacion})
+                                                                       "permisos_edicion": usuario_actual.has_perm('user.change_user'),
+                                                                       "permisos_creacion": usuario_actual.has_perm('user.add_user'), 
+                                                                       "permisos_eliminacion": usuario_actual.has_perm('user.delete_user')})
         else:
             return render(request, "main_dash/index.html")
     else:
         messages.error(request, "Error, usted no tiene permisos suficientes")
         return render(request, "main_dash/index.html")
 
-    
 @login_required
 def insert_new_prov(request):
     if request.user.has_perm('crud.add_proveedor'):
@@ -209,17 +313,26 @@ def insert_new_prov(request):
                 nuevo_proveedor.save()
             if request.user.is_authenticated:
                 proveedores = Proveedor.objects.all()
-                return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db": proveedores})
+                return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db": proveedores,
+                                                                            "permisos_creacion":request.user.has_perm('crud.add_proveedor'),
+                                                                            "permisos_eliminacion":request.user.has_perm('crud.delete_proveedor'),
+                                                                            "permisos_edicion":request.user.has_perm('crud.change_proveedor')})
             else:
                 return render(request, "main_dash/index.html")
         except Exception as error:
             messages.error(request, "Su solicitud no puedo ser procesada: " + str(error))
             proveedores = Proveedor.objects.all()
-            return render(request, "admin_dash/productos_admin.html", {"proveedores_en_db" : proveedores})
+            return render(request, "admin_dash/productos_admin.html", {"proveedores_en_db" : proveedores,
+                                                                        "permisos_creacion":request.user.has_perm('crud.add_proveedor'),
+                                                                        "permisos_eliminacion":request.user.has_perm('crud.delete_proveedor'),
+                                                                        "permisos_edicion":request.user.has_perm('crud.change_proveedor')})
     else:
         messages.error(request, "Usted no tiene los permisos sufiecientes para desarrollar esta acción")
         proveedores = Proveedor.objects.all()
-        return render(request, "admin_dash/productos_admin.html", {"proveedores_en_db" : proveedores})
+        return render(request, "admin_dash/productos_admin.html", {"proveedores_en_db" : proveedores,
+                                                                    "permisos_creacion":request.user.has_perm('crud.add_proveedor'),
+                                                                    "permisos_eliminacion":request.user.has_perm('crud.delete_proveedor'),
+                                                                    "permisos_edicion":request.user.has_perm('crud.change_proveedor')})
 
 @login_required
 def eliminar_proveedores(request, prov_nit_eliminar):
@@ -228,15 +341,24 @@ def eliminar_proveedores(request, prov_nit_eliminar):
             proveedor = Proveedor.objects.get(prov_nit = prov_nit_eliminar)
             proveedor.delete() # DELETE FROM proveedor WHERE prov_nit = prov_nit_eliminar
             proveedores = Proveedor.objects.all()
-            return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db" : proveedores})
+            return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db" : proveedores, 
+                                                                         "permisos_eliminacion": request.user.has_perm('crud.delete_proveedor'), 
+                                                                         "permisos_creacion": request.user.has_perm('crud.add_proveedor'),
+                                                                         "permisos_edicion": request.user.has_perm('crud.change_proveedor')})
         except Exception as error:
             messages.error(request, "Ha ocurrido un error inesperado: " + str(error))
             proveedores = Proveedor.objects.all()
-            return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db" : proveedores})
+            return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db" : proveedores,
+                                                                        "permisos_eliminacion":request.user.has_perm('crud.delete_proveedor'),
+                                                                        "permisos_creacion": request.user.has_perm('crud.add_proveedor'),
+                                                                        "permisos_edicion": request.user.has_perm('crud.change_proveedor')})
     else:
         messages.error(request, "Usted no tiene permisos para desarrollar esta acción")
         proveedores = Proveedor.objects.all()
-        return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db" : proveedores})
+        return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db" : proveedores,
+                                                                    "permisos_eliminacion":request.user.has_perm('crud.delete_proveedor'),
+                                                                    "permisos_creacion": request.user.has_perm('crud.add_proveedor'),
+                                                                    "permisos_edicion": request.user.has_perm('crud.change_proveedor')})
 
 @login_required
 def materiales_admin(request):
@@ -244,16 +366,13 @@ def materiales_admin(request):
         if request.user.is_authenticated:
             materiales = Material.objects.all()
             proveedores = Proveedor.objects.all()
-            permisos_edicion = request.user.has_perm('user.change_material')
-            permisos_creacion = request.user.has_perm('user.add_material')
-            permisos_eliminacion = request.user.has_perm('user.delete_material')
             return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, 
                                                                         "proveedores_en_db": proveedores, 
-                                                                        "permisos_creacion":permisos_creacion, 
-                                                                        "permisos_edicion":permisos_edicion, 
-                                                                        "permisos_eliminacion":permisos_eliminacion})
+                                                                        "permisos_creacion": request.user.has_perm('crud.add_material'), 
+                                                                        "permisos_edicion": request.user.has_perm('crud.change_material'), 
+                                                                        "permisos_eliminacion": request.user.has_perm('crud.delete_material')})
         else:
-            return render(request, "main_dash/index.html")
+            return render(request, "admin_dash/index.html")
     else:
         messages.error(request, "Usted no tiene los permisos suficientes para desarrollar esta acción")
         return render(request, "main_dash/main.html")    
@@ -266,17 +385,29 @@ def eliminar_materiales(request, mat_id_eliminar):
             proveedor.delete() # DELETE FROM material WHERE mat_id = mat_id_eliminar
             materiales = Material.objects.all()
             proveedores = Proveedor.objects.all()
-            return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db" : materiales, "proveedores_en_db": proveedores})
+            return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db" : materiales,
+                                                                         "proveedores_en_db": proveedores, 
+                                                                        "permisos_creacion": request.user.has_perm('crud.add_material'), 
+                                                                        "permisos_edicion": request.user.has_perm('crud.change_material'), 
+                                                                        "permisos_eliminacion": request.user.has_perm('crud.delete_material')})
         except Exception as error:
             messages.error(request, "Ha ocurrido un error fatal: " + str(error))
             materiales = Material.objects.all()
             proveedores = Proveedor.objects.all()
-            return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db" : materiales, "proveedores_en_db": proveedores})
+            return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db" : materiales, 
+                                                                        "proveedores_en_db": proveedores, 
+                                                                        "permisos_creacion": request.user.has_perm('crud.add_material'), 
+                                                                        "permisos_edicion": request.user.has_perm('crud.change_material'), 
+                                                                        "permisos_eliminacion": request.user.has_perm('crud.delete_material')})
     else: 
         messages.error(request, "Usted no tiene los permisos para desarrollar esta acción")
         materiales = Material.objects.all()
         proveedores = Proveedor.objects.all()
-        return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db" : materiales, "proveedores_en_db": proveedores})
+        return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db" : materiales, 
+                                                                    "proveedores_en_db": proveedores, 
+                                                                    "permisos_creacion": request.user.has_perm('crud.add_material'), 
+                                                                    "permisos_edicion": request.user.has_perm('crud.change_material'), 
+                                                                    "permisos_eliminacion": request.user.has_perm('crud.delete_material')})
 
 @login_required
 def insert_new_mat(request):
@@ -291,7 +422,11 @@ def insert_new_mat(request):
                     messages.error(request, "El nombre o el id de producto ya existen en la base de datos")
                     materiales = Material.objects.all()
                     proveedores = Proveedor.objects.all()
-                    return render(request, "admin_dash/productos_admin.html", {"materiales_en_db": materiales,"proveedores_en_db" : proveedores})
+                    return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales,
+                                                                                "proveedores_en_db" : proveedores, 
+                                                                                "permisos_creacion": request.user.has_perm('crud.add_material'), 
+                                                                                "permisos_edicion": request.user.has_perm('crud.change_material'), 
+                                                                                "permisos_eliminacion": request.user.has_perm('crud.delete_material')})
                 json_structure_new_material = "{"+f""""mat_id" : "{mat_id}", "stock": "{stock}", "nombre":"{nombre}" """ + "}" 
                 json_data_new_material = json.loads(json_structure_new_material)
                 proveedor = Proveedor.objects.get(prov_nit = mat_pro_id)
@@ -302,25 +437,36 @@ def insert_new_mat(request):
                 nuevo_material.save()
                 materiales = Material.objects.all()
                 proveedores = Proveedor.objects.all()
-                return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
+                return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, 
+                                                                            "proveedores_en_db": proveedores, 
+                                                                            "permisos_creacion": request.user.has_perm('crud.add_material'), 
+                                                                            "permisos_edicion": request.user.has_perm('crud.change_material'), 
+                                                                            "permisos_eliminacion": request.user.has_perm('crud.delete_material')})
         except Exception as error:
             messages.error(request, "Ha ocurrido un grave error: " + str(error))
             materiales = Material.objects.all()
             proveedores = Proveedor.objects.all()
-            return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
+            return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, 
+                                                                        "proveedores_en_db": proveedores, 
+                                                                        "permisos_creacion": request.user.has_perm('crud.add_material'), 
+                                                                        "permisos_edicion": request.user.has_perm('crud.change_material'), 
+                                                                        "permisos_eliminacion": request.user.has_perm('crud.delete_material')})
     else:
         messages.error(request, "Usted no tiene permisos para desarrollar esta acción")
         materiales = Material.objects.all()
         proveedores = Proveedor.objects.all()
-        return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
+        return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, 
+                                                                    "proveedores_en_db": proveedores, 
+                                                                    "permisos_creacion": request.user.has_perm('crud.add_material'), 
+                                                                    "permisos_edicion": request.user.has_perm('crud.change_material'), 
+                                                                    "permisos_eliminacion": request.user.has_perm('crud.delete_material')})
 
 @login_required
 def clientes_admin(request):
     if request.user.has_perm('crud.view_consulta'):
         consulta = Consulta.objects.all()
-        permisos_eliminacion = request.user.has_perm('crud.delete_consulta')
         return render(request, "admin_dash/clientes_admin.html", {"consultas_en_db": consulta, 
-                                                                  "permisos_eliminacion":permisos_eliminacion})
+                                                                  "permisos_eliminacion": request.user.has_perm('crud.delete_consulta')})
     else:
         messages.error(request, "Usted no tiene permiso para acceder a esta sección")
         return render(request, "admin_dash/main.html")
@@ -331,17 +477,20 @@ def eliminar_consulta(request, id_consulta_eliminar):
         consulta_eliminar = Consulta.objects.get(id = id_consulta_eliminar)
         consulta_eliminar.delete()
         consulta = Consulta.objects.all()
-        return render(request, "admin_dash/clientes_admin.html", {"consultas_en_db": consulta})
+        return render(request, "admin_dash/clientes_admin.html", {"consultas_en_db": consulta,
+                                                                  "permisos_eliminacion": request.user.has_perm('crud.delete_consulta')})
     else:
         messages.error(request, "Usted no tiene permiso para acceder a esta sección")
         consulta = Consulta.objects.all()
-        return render(request, "admin_dash/clientes_admin.html", {"consultas_en_db": consulta})
+        return render(request, "admin_dash/clientes_admin.html", {"consultas_en_db": consulta,
+                                                                  "permisos_eliminacion": request.user.has_perm('crud.delete_consulta')})
 
 @login_required
 def create_new_user(request):
     if request.user.has_perm('user.add_user'):
         try:
             if request.method == "POST":
+                usuario_actual = request.user
                 new_user_first_name = request.POST.get('new_user_first_name')
                 new_user_last_name = request.POST.get('new_user_last_name')
                 new_username = request.POST.get('new_username')
@@ -350,8 +499,11 @@ def create_new_user(request):
                 if new_user_email in User.objects.values_list('email', flat=True) or new_username in User.objects.values_list('username', flat=True):
                     messages.error(request, "El nombre de usuario o el email ya existen en la base de datos")
                     users = User.objects.all()
-                    return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users})
-
+                    return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users,
+                                                                                "usuario_actual": usuario_actual,
+                                                                               "permisos_creacion":request.user.has_perm('user.add_user'),
+                                                                               "permisos_eliminacion":request.user.has_perm('user.delete_user'), 
+                                                                               "permisos_edicion":request.user.has_perm('user.change_user')})
                 json_structure_new_user = "{"+f""""first_name" : "{new_user_first_name}", "last_name": "{new_user_last_name}", "usuario":"{new_username}", "password" : "{new_user_password}", "email":"{new_user_email}" """ + "}" 
                 json_data_new_user = json.loads(json_structure_new_user)
                 nuevo_usuario = User.objects.create_user(json_data_new_user['usuario'],
@@ -362,21 +514,36 @@ def create_new_user(request):
                 nuevo_usuario.is_staff = 1
                 nuevo_usuario.save()
                 users = User.objects.all()
-                usuario_actual = request.user
-                return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, "usuario_actual":usuario_actual})
+                return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, 
+                                                                           "usuario_actual":usuario_actual,
+                                                                            "permisos_creacion":request.user.has_perm('user.add_user'),
+                                                                            "permisos_eliminacion":request.user.has_perm('user.delete_user'), 
+                                                                            "permisos_edicion":request.user.has_perm('user.change_user')})
             else:
                 messages.error("No se pudo crear el nuevo usuario: " + "error de administrador")
                 users = User.objects.all()
                 usuario_actual = request.user
-                return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, "usuario_actual": usuario_actual})
+                return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, 
+                                                                           "usuario_actual": usuario_actual,
+                                                                            "permisos_creacion":request.user.has_perm('user.add_user'),
+                                                                            "permisos_eliminacion":request.user.has_perm('user.delete_user'), 
+                                                                            "permisos_edicion":request.user.has_perm('user.change_user')})
         except Exception as error:
             messages.error(request, "Ha ocurrido un grave error: " + str(error))
             users = User.objects.all()
-            return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users})
+            return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, 
+                                                                        "usuario_actual": usuario_actual,
+                                                                        "permisos_creacion":request.user.has_perm('user.add_user'),
+                                                                        "permisos_eliminacion":request.user.has_perm('user.delete_user'), 
+                                                                        "permisos_edicion":request.user.has_perm('user.change_user')})
     else:
         messages.error(request, "Usted no tiene los permisos suficientes para desarrollar esta acción")
         users = User.objects.all()
-        return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users})    
+        return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, 
+                                                                    "usuario_actual": usuario_actual,
+                                                                    "permisos_creacion":request.user.has_perm('user.add_user'),
+                                                                    "permisos_eliminacion":request.user.has_perm('user.delete_user'), 
+                                                                    "permisos_edicion":request.user.has_perm('user.change_user')})    
     
 @login_required
 def eliminar_usuarios(request, id_usuario_eliminar):
@@ -385,12 +552,20 @@ def eliminar_usuarios(request, id_usuario_eliminar):
         usuario_eliminar.delete()
         users = User.objects.all()
         usuario_actual = request.user
-        return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, "usuario_actual" : usuario_actual})
+        return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, 
+                                                                    "usuario_actual" : usuario_actual, 
+                                                                    "permisos_creacion":request.user.has_perm('user.add_user'),
+                                                                    "permisos_eliminacion":request.user.has_perm('user.delete_user'), 
+                                                                    "permisos_edicion":request.user.has_perm('user.change_user')})
     else: 
         messages.error(request, "Usted no tiene los permisos suifiecientes para desarrollar esta acción")
         users = User.objects.all()
         usuario_actual = request.user
-        return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, "usuario_actual" : usuario_actual})
+        return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users, 
+                                                                    "usuario_actual" : usuario_actual, 
+                                                                    "permisos_creacion":request.user.has_perm('user.add_user'),
+                                                                    "permisos_eliminacion":request.user.has_perm('user.delete_user'), 
+                                                                    "permisos_edicion":request.user.has_perm('user.change_user')})
 
 @login_required
 def proveedores_update(request, prov_nit_edit):
@@ -418,17 +593,26 @@ def editar_proveedor(request):
                 proveedor.save()
             if request.user.is_authenticated:
                 proveedores = Proveedor.objects.all()
-                return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db": proveedores})
+                return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db": proveedores, 
+                                                                             "permisos_creacion":request.user.has_perm('crud.add_proveedor'), 
+                                                                             "permisos_eliminacion": request.user.has_perm('crud.delete_proveedor'), 
+                                                                             "permisos_edicion": request.user.has_perm('crud.change_proveedor')})
             else:
                 return render(request, "main_dash/index.html")
         except Exception as error:
             messages.error(request, "Su solicitud no puedo ser procesada: " + str(error))
             proveedores = Proveedor.objects.all()
-            return render(request, "admin_dash/productos_admin.html", {"proveedores_en_db" : proveedores})
+            return render(request, "admin_dash/productos_admin.html", {"proveedores_en_db" : proveedores, 
+                                                                             "permisos_creacion":request.user.has_perm('crud.add_proveedor'), 
+                                                                             "permisos_eliminacion": request.user.has_perm('crud.delete_proveedor'), 
+                                                                             "permisos_edicion": request.user.has_perm('crud.change_proveedor')})
     else:
         messages.error(request, "Usted no tiene los permisos necesarios para desarrollar esta acción.")
         proveedores = Proveedor.objects.all()
-        return render(request, "admin_dash/productos_admin.html", {"proveedores_en_db" : proveedores})    
+        return render(request, "admin_dash/productos_admin.html", {"proveedores_en_db" : proveedores, 
+                                                                             "permisos_creacion":request.user.has_perm('crud.add_proveedor'), 
+                                                                             "permisos_eliminacion": request.user.has_perm('crud.delete_proveedor'), 
+                                                                             "permisos_edicion": request.user.has_perm('crud.change_proveedor')})    
 
 @login_required
 def materiales_update(request, material_id):
@@ -441,7 +625,11 @@ def materiales_update(request, material_id):
             messages.error(request, "Usted no tiene los permisos suficientes para desarrollar esta acción.")
             materiales = Material.objects.all()
             proveedores = Proveedor.objects.all()
-            return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
+            return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, 
+                                                                        "proveedores_en_db": proveedores, 
+                                                                        "permisos_creacion": request.user.has_perm('crud.add_material'), 
+                                                                        "permisos_edicion": request.user.has_perm('crud.change_material'), 
+                                                                        "permisos_eliminacion": request.user.has_perm('crud.delete_material')})
         else: 
             return render(request, "admin_dash/main.html")
 
@@ -466,18 +654,120 @@ def update_material(request):
                 material.save()
                 materiales = Material.objects.all()
                 proveedores = Proveedor.objects.all()
-                return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
+                return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, 
+                                                                            "proveedores_en_db": proveedores, 
+                                                                            "permisos_creacion": request.user.has_perm('crud.add_material'), 
+                                                                            "permisos_edicion": request.user.has_perm('crud.change_material'), 
+                                                                            "permisos_eliminacion": request.user.has_perm('crud.delete_material')})
         except Exception as error:
             messages.error(request, "Ha ocurrido un grave error: " + str(error))
             materiales = Material.objects.all()
             proveedores = Proveedor.objects.all()
-            return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
+            return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, 
+                                                                        "proveedores_en_db": proveedores, 
+                                                                        "permisos_creacion": request.user.has_perm('crud.add_material'), 
+                                                                        "permisos_edicion": request.user.has_perm('crud.change_material'), 
+                                                                        "permisos_eliminacion": request.user.has_perm('crud.delete_material')})
     else:
         messages.error(request, "Usted no tiene los permisos suficientes para desarrollar esta acción.")
         materiales = Material.objects.all()
         proveedores = Proveedor.objects.all()
-        return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, "proveedores_en_db": proveedores})
+        return render(request, "admin_dash/materiales_admin.html", {"materiales_en_db": materiales, 
+                                                                    "proveedores_en_db": proveedores, 
+                                                                    "permisos_creacion": request.user.has_perm('crud.add_material'), 
+                                                                    "permisos_edicion": request.user.has_perm('crud.change_material'), 
+                                                                    "permisos_eliminacion": request.user.has_perm('crud.delete_material')})
 
 @login_required
 def update_productos(request, id_actualizacion):
+    if request.user.has_perm('user.change_proveedor'):
+        producto = Producto.objects.get(pro_id = id_actualizacion)
+        materiales_total = Material.objects.all()
+        materiales_producto = producto.materiales.all()
+        mat_send_prod = []
+        mat_send_no_prod = []
+        for i in materiales_total:
+            mat_send_prod.append(i) if i in materiales_producto else mat_send_no_prod.append(i)
+        return render(request, "update_templates/productos_update.html", {"producto_editar": producto,
+                                                                          "material_en_db": mat_send_no_prod, 
+                                                                          "materiales_producto": mat_send_prod})
+    else:
+        productos = Producto.objects.all()
+        materiales = Material.objects.all()
+        return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos,
+                                                                   "material_en_db" : materiales,
+                                                                       "permiso_adicion":request.user.has_perm('crud.add_producto'),
+                                                                       "permiso_eliminacion":request.user.has_perm('crud.delete_producto'),
+                                                                       "permiso_eliminacion":request.user.has_perm('change.crud_producto')})
+    
+@login_required
+def actualizar_producto(request):
     pass
+
+@login_required
+def empleados_update(request, id_empleado):
+    if request.user.has_perm('user.view_user'):
+        lista_permisos = ['crud.add_producto', 
+                          'crud.view_producto', 
+                          'crud.change_producto', 
+                          'crud.delete_producto',
+                          'crud.add_material', 
+                          'crud.view_material', 
+                          'crud.change_material', 
+                          'crud.delete_material',
+                          'crud.add_proveedor', 
+                          'crud.view_proveedor', 
+                          'crud.change_proveedor', 
+                          'crud.delete_proveedor',
+                          'crud.delete_consulta', 
+                          'crud.view_consulta'] 
+        users = User.objects.get(id = id_empleado)
+        permisos_usuario = users.get_all_permissions()
+        return render(request, 'update_templates/empleados_update.html', {"usuario":users,
+                                                                     "permisos":lista_permisos, 
+                                                                     "permisos_usuario":permisos_usuario})
+    else: pass
+
+@login_required
+def actualizar_empleado(request, id_user):
+    if request.user.has_perm('crud.change_material'):
+        lista_permisos = ['crud.add_producto', 
+                          'crud.view_producto', 
+                          'crud.change_producto', 
+                          'crud.delete_producto',
+                          'crud.add_material', 
+                          'crud.view_material', 
+                          'crud.change_material', 
+                          'crud.delete_material',
+                          'crud.add_proveedor', 
+                          'crud.view_proveedor', 
+                          'crud.change_proveedor', 
+                          'crud.delete_proveedor',
+                          'crud.delete_consulta', 
+                          'crud.view_consulta'] 
+        id_permiso = [49, 52, 50, 51, 45, 48, 46, 47, 41, 44, 42 ,43 ,39, 40]
+        if request.method == 'POST':
+            permisos_validados = [request.POST.get(i,None) for i in lista_permisos if request.POST.get(i,None) is not None]
+            apellido = request.POST.get('new_user_last_name')
+            email = request.POST.get('new_user_email')
+            usuario_editar = User.objects.get(id = id_user)
+            permisos_usuario = usuario_editar.get_all_permissions()
+            usuario_editar.last_name = apellido
+            usuario_editar.email = email
+            for i in permisos_validados:
+                index = lista_permisos.index(i)
+                if i not in permisos_usuario:
+                    usuario_editar.user_permissions.add(id_permiso[index])
+            for i in permisos_usuario:
+                index = lista_permisos.index(i)
+                if i not in permisos_validados:
+                    usuario_editar.user_permissions.remove(id_permiso[index])
+
+        users = User.objects.all()
+        usuario_actual = request.user
+        return render(request, "admin_dash/empleados_admin.html", {"usuarios_en_db" : users,
+                                                                    "usuario_actual": usuario_actual,
+                                                                   "permisos_eliminacion":request.user.has_perm('user.delete_user'), 
+                                                                   "permisos_creacion":request.user.has_perm('user.add_user'),
+                                                                   "permisos_edicion":request.user.has_perm('user.change_user')})
+    

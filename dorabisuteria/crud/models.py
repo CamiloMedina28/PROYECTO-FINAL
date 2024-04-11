@@ -91,5 +91,5 @@ class Producto(models.Model):
         verbose_name_plural = "Productos"
 
     def __str__(self) -> str:
-        texto = "id_proveedor: {0} - nombre: {1} - precio: {2}"
+        texto = "id_producto: {0} - nombre: {1} - precio: {2}"
         return texto.format(self.pro_id, self.pro_nombre, self.pro_precio)
