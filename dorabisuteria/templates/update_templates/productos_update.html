@@ -26,11 +26,11 @@
 
     <div class="col s4">
         <div>
-            <form action="/actualizar_producto" method="POST">
+            <form action="/actualizar_producto/{{producto_editar.pro_id}}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row input-field">
                     <i class="material-icons prefix">assignment_ind</i>
-                    <input id="pro_id" type="text" value="{{producto_editar.pro_id}}" name="pro_id" class="validate" disabled>
+                    <input id="pro_id" type="text" value="{{producto_editar.pro_id}}" name="pro_id" class="validate" readonly>
                     <label for="pro_id">ID de producto</label>
                 </div>
 
@@ -55,7 +55,7 @@
                 <div class="row file-field input-field">
                     <div class="btn">
                         <span>Imagen</span>
-                         <input  type="file">  <!-- # name="pro_img" -->
+                         <input  type="file">  
                     </div>
                     <div class="row file-path-wrapper">
                       <input name="pro_img" class="file-path validate" type="file">
@@ -63,25 +63,24 @@
                     <img src={{producto_editar.pro_img.url}}>
                 </div>
 
+                <br><br><br><br><br>
 
-                <h5>Materiales actuales</h5>
-                {% for materiales in materiales_producto %}
-                    <input type="checkbox" name="mat{{materiales.mat_id}}" value="{{materiales.mat_id}}" checked>
-                    <label for="mat{{materiales.mat_id}}"> {{materiales.nombre}}</label>
-                {% endfor %}
+                <h3>Seleccione los materiales</h3>
+                <!-- <div class="input-field"> -->
+                    <div class="row input-field">
+                        {%for material_iter in material_en_db%}
+                            {% if material_iter in materiales_producto%}
+                                <input type="checkbox" id="mycheck" checked="checked" name="{{material_iter.mat_id}}" value={{material_iter.mat_id}}><label id="labels_check" for="mycheck">{{material_iter}}</label>
+                                <br>
+                            {% else %}
+                                <input type="checkbox" id="mycheck" name="{{material_iter.mat_id}}" value="{{material_iter.mat_id}}"><label id="labels_check" for="mycheck">{{material_iter}}</label>
+                                <br>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+    
+                <!-- </div> -->
 
-                <div class="input-field col s12">
-                    <label>Seleccione los materiales</label>
-                    <select name="materiales" multiple>
-                       {% for materiales in material_en_db%}
-                            <option value={{materiales.mat_id}}>{{materiales.mat_id}} - {{materiales.nombre}}</option>
-                       {% endfor %}
-                    </select>              
-                </div>
-
-                    
-                
-                
                 <button class="waves-effect waves-light btn"><input type="submit"></button>
                 
             </form>

@@ -6,9 +6,11 @@ from .views import *
 
 urlpatterns = [
     path('gestion_productos/', ProductsView.as_view(), name="gestion_productos"),
+    path('gestion_productos/<int:id>', ProductsView.as_view(), name="gestion_productos_ind"),
     path('gestion_materiales/', MaterialView.as_view(), name="gestion_materiales"),
+    path('gestion_materiales/<int_id>', MaterialView.as_view(), name="gestion_materiales"),
     path('gestion_proveedores/', ProveedorView.as_view(), name="gestion_proveedores"),
-    path('gestion_consultas/', ConsultaView.as_view(), name="gestion_consultas/"),
+    path('gestion_proveedores/<int:id>', ProveedorView.as_view(), name="gestion_proveedores"),
     path('inventario', views.inventario, name="inventario"),
     path('user_login', views.user_login, name="user_login"), 
     path('client_return', views.client_return, name="client_return"), 
@@ -33,7 +35,7 @@ urlpatterns = [
     path('materiales_update/<material_id>', views.materiales_update, name="materiales_update"), 
     path('update_material', views.update_material, name="update_material"), 
     path('update_productos/<id_actualizacion>', views.update_productos, name="update_productos"), 
-    path('actualizar_producto', views.actualizar_producto, name="actualizar_producto"), 
+    path('actualizar_producto/<pro_id>', views.actualizar_producto, name="actualizar_producto"), 
     path('empleados_update/<id_empleado>', views.empleados_update, name="empleados_update"), 
     path('actualizar_empleado/<id_user>', views.actualizar_empleado, name="actualizar_empleado")
 ] 

@@ -63,82 +63,157 @@ class ProductsView(View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-    def get(self, request):
-        productos = list(Producto.objects.values())
-        info = {"productos_en_db" : productos}
+    def get(self, request, id = 0):
+        if id > 0:
+            productos = list(Producto.objects.filter(pro_id = id).values())
+            if len(productos) > 0:
+                producto = productos[0]
+                info = {"productos_en_db" : producto}
+            else: 
+                info = {"Mensaje_error" : "Productos no encontrados"}
+        else:
+            productos = list(Producto.objects.values())
+            if len(productos) > 0:
+                info = {"productos_en_db" : productos} 
+            else: 
+                info = {"Mensaje_error" : "Productos no encontrados"}
         return JsonResponse(info)
 
     def post(self, request):
         json_info = json.loads(request.body)
-        print(json_info)
-        Producto.objects.create()
+        Producto.objects.create(pro_id=json_info['pro_id'],
+                                pro_nombre = json_info['pro_nombre'], 
+                                pro_precio = json_info['pro_precio'],
+                                pro_stock = json_info['pro_stock'])
         datos = {'message': 'Proceso exitoso'}
+        return JsonResponse(datos)
 
-    def put(self, request):
-        pass
+    def put(self, request, id):
+        json_info = json.loads(request.body)
+        productos = list(Producto.objects.filter(pro_id = id).values())
+        if len(productos) > 0:
+            products = Producto.objects.get(pro_id = id)
+            products.pro_nombre = json_info['pro_nombre']
+            products.pro_precio = json_info['pro_precio']
+            products.pro_stock = json_info['pro_stock']
+            products.save()
+            datos = {"mensaje_success": "producto_alterado"}
+        else: 
+            datos = {"mensaje_error": "compañia no encontrada"}
+        return JsonResponse(datos)
 
-    def delete(self, request):
-        pass
+    def delete(self, request, id):
+        productos = list(Producto.objects.filter(pro_id = id).values())
+        if len(productos) > 0:
+            Producto.objects.filter(pro_id = id).delete()
+            datos = {"mensaje_success": "producto_alterado"}
+        else:
+            datos = {'mensaje_error': "No se han encontrado los productos."}
+        return JsonResponse(datos)
 
 class MaterialView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-    def get(self, request):
-        materiales = list(Material.objects.values())
-        proveedores = list(Proveedor.objects.values())
-        datos = {"materiales_en_db": materiales, 
-                "proveedores_en_db": proveedores}
+    def get(self, request, id = 0):
+        if id > 0:
+            materiales = list(Material.objects.filter(mat_id = id).values())
+            if len(materiales) > 0:
+                material = materiales[0]
+                datos = {"materiales_en_db": material}
+            else:
+                datos = {"mensaje_error": "Materiales no encontrados"}
+        else:
+            materiales = list(Material.objects.values())
+            if len(materiales) > 0:
+                datos = {"materiales_en_db" : materiales}
+            else:
+                datos = {"Mensaje_error": "Materiales no encontrados"}
         return JsonResponse(datos)
 
     def post(self,request):
-        pass
+        json_info = json.loads(request.body)
+        Material.objects.create(
+            mat_id = json_info['mat_id'],
+            mat_prov_id =json_info['mat_prov_id'],
+            stock = json_info['stock'],
+            nombre = json_info['nombre'])
+        datos = {"Mensaje": "Proceso exitoso"}
+        return JsonResponse(datos)
 
-    def put(self, request):
-        pass
+    def put(self, request, id):
+        json_info = json.loads(request.body)
+        materiales = list(Material.objects.filter(mat_id = id).values())
+        if len(materiales) > 0:
+            material = Material.objects.get(mat_id = id)
+            material.mat_prov_id =json_info['mat_prov_id']
+            material.stock = json_info['stock']
+            material.nombre = json_info['nombre']
+            material.save()
+            datos = {"Mensaje_succes" : "Material alterado"}
+        else: 
+            datos = {"Mensaje_error" : "Material no encontrado"}
+        return JsonResponse(datos)
 
-    def delete(self, request):
-        pass
+    def delete(self, request, id):
+        materiales = list(Material.objects.filter(mat_id = id).values())
+        if len(materiales) > 0:
+            Material.objects.filter(mat_id = id).delete()
+            datos = {"Mensaje_success": "Producto alterado con exito"}
+        else:
+            datos = {"Mensaje de error": "No se han encontrado los productos"}
 
 class ProveedorView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-    def get(self, request):
-        proveedores = list(Proveedor.objects.values())
-        datos = {"proveedores_en_db": proveedores}
+    def get(self, request, id):
+        if id > 0:
+            proveedores = list(Proveedor.objects.filter(prov_id = id).values())
+            if len(proveedores) > 0:
+                proveedor = proveedores[0]
+                datos = {"proveedores_en_db": proveedor}
+            else:
+                datos = {"Mensaje_error": "No se han encontrado proveedores en la base de datos"}
+        else:
+            proveedores = list(Producto.objects.values())
+            if len(proveedores) > 0:
+                datos = {"Proveedores_en_db":proveedores}
+            else:
+                datos = {"Mensaje_error" : "Proveedor no encontrado"}
         return JsonResponse(datos)
 
     def post(self,request):
-        pass
+        json_info = json.loads(request.body)
+        Proveedor.objects.create(prov_nit = json_info['prov_nit'],
+                                 prov_razon_social = json_info['prov_razon_social'],
+                                 prov_telefono = json_info['prov_telefono'])
+        datos = {"Mensaje": "Proceso exitoso"}
+        return JsonResponse(datos)
 
     def put(self, request):
-        pass
+        json_info = json.loads(request.body)
+        proveedor = list(Proveedor.objects.filter(prov_id = id))
+        if len(proveedor) > 0:
+            proveedor = Proveedor.objects.get(prov_id = id)
+            proveedor.prov_razon_social = json_info['prov_razon_social']
+            proveedor.prov_telefono = json_info['prov_telefono']
+            proveedor.save()
+            datos = {"Mensaje éxito" : "Proceso exitoso"}
+        else: 
+            datos = {"Mensaje error": "El proceso no se pudo desarrollar"}
+        return JsonResponse(datos)
 
-    def delete(self, request):
-        pass
-
-class ConsultaView(View):
-    @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
-    def get(self, request):
-        clientes = list(Cliente.objects.values())
-        consulta = list(Consulta.objects.values())
-        return JsonResponse({"consultas_en_db": consulta, 
-                             "clientes": clientes})
-
-    def post(self,request):
-        pass
-
-    def put(self, request):
-        pass
-
-    def delete(self, request):
-        pass
+    def delete(self, request, id):
+        proveedor = list(Proveedor.objects.filter(prov_id = id).values())
+        if len(proveedor) > 0:
+            Proveedor.objects.filter(prov_id = id).delete()
+            datos = {"Mensaje succes": "Producto borrado con éxito"}
+        else: 
+            datos = {"Mensaje error": 'No se han encontrado los elementos a eliminar'}
+        return JsonResponse(datos)
 
 @login_required
 def products_administration(request):
@@ -157,12 +232,10 @@ def products_administration(request):
                                                                            "permiso_edicion": permiso_edicion})
             else:
                 return render(request, "/main_dash/index.html")
-        except Exception as error:
-            messages.error(request, "Ha ocurrido un problema al intentar procesar la solicitud" + str(error))
-            return render(request, "main_dash/index.html")
+        except:
+            return render(request, "main_dash/index.html", {"mensaje": "Ha ocurrido un problema al intentar procesar la solicitud"})
     else: 
-        messages.error(request, "el usuario no tiene permisos para acceder a esta sección")
-        return render(request, "admin_dash/main.html")
+        return render(request, "admin_dash/main.html", {"mensaje": "el usuario no tiene permisos para acceder a esta sección"})
 
 @login_required
 def prov_administration(request):
@@ -584,6 +657,12 @@ def editar_proveedor(request):
                 prov_nit = request.POST.get('prov_nit')
                 prov_razon_social = request.POST.get('prov_razon_social')
                 prov_telefono = request.POST.get('prov_telefono')
+                if prov_razon_social in Proveedor.objects.values_list('prov_razon_social', flat=True):
+                    return render(request, "admin_dash/proveedores_admin.html", {"proveedores_en_db": proveedores, 
+                                                                             "permisos_creacion":request.user.has_perm('crud.add_proveedor'), 
+                                                                             "permisos_eliminacion": request.user.has_perm('crud.delete_proveedor'), 
+                                                                             "permisos_edicion": request.user.has_perm('crud.change_proveedor'), 
+                                                                             "mensaje_error": "Hay inconsistencias en la información ingresada"})
                 proveedor = Proveedor.objects.get(prov_nit = prov_nit)
                 json_structure_new_proveedor = "{"+f""""prov_nit" : "{prov_nit}","prov_razon_social" : "{prov_razon_social}", "prov_telefono": "{prov_telefono}" """ + "}" 
                 json_data_new_proveedor = json.loads(json_structure_new_proveedor)
@@ -682,15 +761,11 @@ def update_material(request):
 def update_productos(request, id_actualizacion):
     if request.user.has_perm('user.change_proveedor'):
         producto = Producto.objects.get(pro_id = id_actualizacion)
-        materiales_total = Material.objects.all()
-        materiales_producto = producto.materiales.all()
-        mat_send_prod = []
-        mat_send_no_prod = []
-        for i in materiales_total:
-            mat_send_prod.append(i) if i in materiales_producto else mat_send_no_prod.append(i)
+        materiales_total = list(Material.objects.all())
+        materiales_producto = list(producto.materiales.all())
         return render(request, "update_templates/productos_update.html", {"producto_editar": producto,
-                                                                          "material_en_db": mat_send_no_prod, 
-                                                                          "materiales_producto": mat_send_prod})
+                                                                          "material_en_db": materiales_total, 
+                                                                          "materiales_producto": materiales_producto})
     else:
         productos = Producto.objects.all()
         materiales = Material.objects.all()
@@ -698,11 +773,45 @@ def update_productos(request, id_actualizacion):
                                                                    "material_en_db" : materiales,
                                                                        "permiso_adicion":request.user.has_perm('crud.add_producto'),
                                                                        "permiso_eliminacion":request.user.has_perm('crud.delete_producto'),
-                                                                       "permiso_eliminacion":request.user.has_perm('change.crud_producto')})
+                                                                       "permiso_edicion":request.user.has_perm('change.crud_producto')})
     
 @login_required
-def actualizar_producto(request):
-    pass
+def actualizar_producto(request, pro_id):
+    if request.user.has_perm('crud.change_producto'):
+        if request.method == "POST":
+            pro_nombre = request.POST.get('pro_nombre')
+            pro_precio = request.POST.get('pro_precio')
+            pro_stock = request.POST.get('pro_stock')
+            pro_img = request.FILES.get('pro_img')  
+            producto_editar = Producto.objects.get(pro_id = pro_id)
+            producto_editar.pro_nombre = pro_nombre
+            producto_editar.pro_precio = pro_precio
+            producto_editar.pro_stock = pro_stock
+            if pro_img is not None:
+                ruta = os.path.join(settings.BASE_DIR, 'media/' + str(producto_editar.pro_img))
+                os.remove(ruta)
+                folder = 'media/'
+                fs = FileSystemStorage(location=folder)
+                filename = fs.save(pro_img.name, pro_img)
+                producto_editar.pro_img = pro_img
+            materiales_total = list(Material.objects.values())
+            materiales_validados = [request.POST.get(str(i['mat_id']),None) for i in materiales_total if request.POST.get(str(i['mat_id']),None) is not None]
+            materiales_producto = list(producto_editar.materiales.values())
+            id_materiales_producto = [i['mat_id'] for i in materiales_producto]
+            for i in materiales_validados:
+                if i not in id_materiales_producto:
+                    producto_editar.materiales.add(i)
+            for i in id_materiales_producto:
+                if i not in materiales_validados:
+                    producto_editar.materiales.remove(Material.objects.get(mat_id = int(i)))
+            producto_editar.save()
+        productos = Producto.objects.all()
+        materiales = Material.objects.all()
+        return render(request, "admin_dash/productos_admin.html", {"productos_en_db" : productos,
+                                                                   "material_en_db" : materiales,
+                                                                       "permiso_adicion":request.user.has_perm('crud.add_producto'),
+                                                                       "permiso_eliminacion":request.user.has_perm('crud.delete_producto'),
+                                                                       "permiso_edicion":request.user.has_perm('change.crud_producto')})       
 
 @login_required
 def empleados_update(request, id_empleado):
@@ -771,3 +880,4 @@ def actualizar_empleado(request, id_user):
                                                                    "permisos_creacion":request.user.has_perm('user.add_user'),
                                                                    "permisos_edicion":request.user.has_perm('user.change_user')})
     
+

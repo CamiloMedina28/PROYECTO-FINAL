@@ -14,4 +14,26 @@ form {
 
 button > a {
   color: white;
+}
+
+[type=checkbox]:not(:checked), [type=checkbox]:checked {
+  position: inherit !important;
+  opacity: 1 !important;
+  pointer-events: all !important;
+}
+
+body {
+  padding: 15px;
+}
+
+.checkboxes {
+  margin-left: 20px;
+}
+
+#labels_check {
+  position: relative;
+}
+
+img {
+  width: 20% !important;
 }/*# sourceMappingURL=admin_productos.css.map */

@@ -82,18 +82,10 @@ WSGI_APPLICATION = 'dorabisuteria.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'dorabisuteriadb.mysql.database.azure.com',
-        'PORT': '3306',
-        'USER': 'dbadmin', 
-        'PASSWORD': 'Camilomedina2829', 
-        'NAME': 'dora_bisuteria', 
-        'OPTIONS':{
-            'init_command' : "SET sql_mode = 'STRICT_TRANS_TABLES'"
-        }
-    },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
